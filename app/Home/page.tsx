@@ -1,6 +1,15 @@
+import { supabase } from "@/utils/supabase/supabase";
+import "../globals.css"
+import { signOut } from "../authSlice";
+import { signIn } from "../authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import React from "react";
-import {useEffect,useState} from "react";
-
+import Google from "./google";
+import X from "./X";
+import { useRouter } from "next/navigation";
+import GuestLogin from "./guestLogin"
 export default function Home(){
     const auth = useSelector((state: any) => state.auth.isSignIn);
   const dispatch = useDispatch()
