@@ -9,7 +9,7 @@ import React from "react";
 import Google from "./google";
 import X from "./X";
 import { useRouter } from "next/navigation";
-import GuestLogin from "./guestLogin"
+import Github from "./github"
 export default function Home(){
     const auth = useSelector((state: any) => state.auth.isSignIn);
   const dispatch = useDispatch()
@@ -55,7 +55,7 @@ export default function Home(){
     return(
         <>
         <div className="flex flex-col items-center justify-center space-y-4 min-h-screen bg-gray-100">
-      <GuestLogin />
+      <Github />
       <Google />
       <X/>
     </div>
