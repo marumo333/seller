@@ -5,7 +5,6 @@ import { signOut } from "../authSlice";
 import { signIn } from "../authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
 import React from "react";
 import Google from "./google";
 import X from "./X";
@@ -15,7 +14,6 @@ export default function Home(){
     const auth = useSelector((state: any) => state.auth.isSignIn);
   const dispatch = useDispatch()
   const [user, setUser] = useState("")//ログイン情報を保持するステート
-  const [cookies] = useCookies()
   const [avatarUrl, setAvatarUrl] = useState<string>(""); // URLを保存する状態
   const router = useRouter();
   useEffect(() => {
