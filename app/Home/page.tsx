@@ -1,3 +1,4 @@
+"use client"
 import { supabase } from "@/utils/supabase/supabase";
 import "../globals.css"
 import { signOut } from "../authSlice";
@@ -54,7 +55,7 @@ export default function Home(){
 
     return(
         <>
-        <div className="flex flex-col items-center justify-center space-y-4 min-h-screen bg-gray-100">
+        <div className="relative isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
       <Github />
       <Google />
       <X/>
