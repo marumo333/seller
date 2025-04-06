@@ -54,6 +54,7 @@ export default function Home(){
     return(
         <>
         <div className="relative isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+          <h1>ログイン画面</h1>
       <Github />
       <Google />
       <X/>
