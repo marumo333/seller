@@ -1,26 +1,29 @@
 "use client";
 import Link from "next/link";
-import NavLinks from "./NavLinks";
-import Hamburger from "./Hamburger";
+import Image from "next/image";
 
-export default function Header  () {
+export default function Header (props:any) {
+    const data = props.list;
+    console.log(data);
   return (
-    <header
-      className={`bg-black text-white py-2 max-[480px]:py4 max-[480px]:px-4 px-6 z-10`}
-    >
-      <nav className="max-w-[1080px] mx-auto flex justify-between items-center max-[899px]:hidden">
-        <Link href="/">
-          <div
-            className="textShadow_wt text-[2.2rem] font-bold text-nowrap max-[1000px]:text-[1.8rem] 
-          hover:opacity-70 transition-all duration-300"
-          >
-            Seller
-          </div>
-        </Link>
-        <NavLinks />
-      </nav>
-      <Hamburger />
-    </header>
+    <nav className='flex'>
+        <div className='flex-none sm:flex-1 md:flex-1 lg:flex-1 xl:flex-1' >
+            <link href='/'>
+            <a>
+                <Image src='/images/logo.png' alt='logo' width={200} height={100} />
+            </a>
+            </link>
+        </div>
+        <div className="flex-initial text-[#abc5c5} font-bold m-5">
+            <ul className="md:flex hidden flex-initial text-left">
+                {data.map((value:any,index:any)=>{
+                    <li key={index} className="p-4" >
+                        <a href={value.link}>{value.name}</a>
+                    </li>
+                    })}
+            </ul>
+        </div>
+    </nav>
   );
 };
 
