@@ -5,7 +5,7 @@ import {useState,useEffect} from "react";
 export default function Header(){
     return(
         <>
-        <h1>Seller(商品管理アプリ)</h1>
+        <h1>Seller</h1>
         </>
     )
 }

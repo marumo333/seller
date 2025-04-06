@@ -16,7 +16,8 @@
     "react-cookie": "^8.0.1",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "sass": "^1.86.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
