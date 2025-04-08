@@ -10,8 +10,8 @@ import Google from "./google";
 import X from "./X";
 import { useRouter } from "next/navigation";
 import Github from "./github"
-export default function Home(){
-    const auth = useSelector((state: any) => state.auth.isSignIn);
+export default function Home() {
+  const auth = useSelector((state: any) => state.auth.isSignIn);
   const dispatch = useDispatch()
   const [user, setUser] = useState("")//ログイン情報を保持するステート
   const [avatarUrl, setAvatarUrl] = useState<string>(""); // URLを保存する状態
@@ -51,14 +51,18 @@ export default function Home(){
     }
   }, [user, router])
 
-    return(
-        <>
-        <div className="relative isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
-          <h1>ログイン画面</h1>
-      <Github />
-      <Google />
-      <X/>
-    </div>
-        </>
-    )
+  return (
+    <>
+      <div className="relative isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+        <h1 className="text-2xl font-bold text-center mb-6">ログイン画面</h1>
+
+
+        <div className="flex justify-center items-center gap-x-4">
+          <Github />
+          <Google />
+          <X />
+        </div>
+      </div>
+    </>
+  )
 }

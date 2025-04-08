@@ -86,7 +86,7 @@ export default function Github() {
   }, []);
   return (
     <div className="flex flex-col items-center justify-center space-y-4 min-h-screen bg-gray-100">
-      <button onClick={signInGoogle} className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg">Githubでログイン</button>
+      <button onClick={signInGoogle} className="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg">Githubでログイン</button>
       {user ? (
         <button
           onClick={signOutGoogle}

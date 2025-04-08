@@ -17,10 +17,9 @@ export default function Header({ list }: HeaderProps) {
             {/* ロゴ */}
             <div className="flex-none sm:flex-1 md:flex-1 lg:flex-1 xl:flex-1 ">
                 <Link href="/">
-                    <Image src="/images/logo.png" alt="logo" width={200} height={100} />
+                    <Image src="/seller.png" alt="logo" width={50} height={25} />
                 </Link>
             </div>
-
             {/* メニューリスト */}
             <div className="flex-initial text-blue-900 font-bold m-5 ">
                 <ul className="md:flex hidden flex-initial text-left">

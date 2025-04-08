@@ -75,7 +75,7 @@ export default function Google() {
   }
 
   useEffect(() => {
-    
+
 
     const fetchAvatarUrl = async () => {
       const { data } = supabase.storage.from("avatars").getPublicUrl("google.jpg");
@@ -97,8 +97,8 @@ export default function Google() {
         <div className="text-gray-500" color="blue"><p>ログイン情報を取得中:</p></div>
       )
       }
-        <Icon url={avatarUrl} />
-        <div className="text-gray-500" color="green"><span>ログインしてください</span></div>
+      <Icon url={avatarUrl} />
+      <div className="text-gray-500" color="green"><span>ログインしてください</span></div>
     </div>
   )
 }
