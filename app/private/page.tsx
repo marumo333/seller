@@ -1,6 +1,7 @@
 "use client"
 import React from "react";
-import supabase from "@/utils/supabase/supabase"
+import supabase from "@/utils/supabase/supabase";
+import {useState,useEffect} from "react";
 export default function Private(){
 
     return(
