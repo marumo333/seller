@@ -20,7 +20,7 @@ export default function RootLayout({
     { name: "myPage", link: "#myPage" },
     { name: "shopEdit", link: "#shopEdit" },
     { name: "stockInfo", link: "#stockInfo" },
-    { name: "shopPost", link: "#shopPost" },
+    { name: "logout", link: "#logout" },
   ];
 
   return (
