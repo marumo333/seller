@@ -9,6 +9,8 @@ interface ImageItem {
   url: string; // 画像のURL
   JAN: number;//JANコード(商品コード)
   content: string;
+  stock:string,
+  price:string;
 }
 
 export default function Image({ params }: { params: Promise<{ id: string }> }) {
@@ -21,7 +23,7 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
     setLoading(true);
     const { data, error } = await supabase
       .from("shopPosts")
-      .select("id,name,image_url,JAN,content")
+      .select("id,name,image_url,JAN,stock,content,price")
       .eq("id", imageId)
       .single();
 
@@ -36,6 +38,8 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
       url: data.image_url, // DB に保存されている URL を直接使用
       JAN: data.JAN || "JANコード無し",
       content: data.content || "説明なし",
+      price:data.price,
+      stock:data.stock,
     })
 
     setLoading(false);
@@ -119,6 +123,14 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
             <p className="text-lg text-gray-700 leading-relaxed">
               商品の概要：
               <span className="font-normal">{imageDetail.content || "（なし）"}</span>
+            </p>
+            <p className="text-lg text-gray-700 leading-relaxed">
+              在庫数：
+              <span className="font-normal">{imageDetail.stock || "（なし）"}</span>
+            </p>
+            <p className="text-lg text-gray-700 leading-relaxed">
+              商品の価格：
+              <span className="font-normal">{imageDetail.price || "（なし）"}</span>
             </p>
           </div>
           <div className="mb-6">
