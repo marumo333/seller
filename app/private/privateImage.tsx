@@ -14,12 +14,14 @@ interface ImageItem {
   content: string;
   tag: string,
   stock: string,
+  price:string,
 }
 
 
 export default function PrivateImage() {
   const [images, setImages] = useState<ImageItem[]>([]);
   const [JAN, setJAN] = useState<string>("")
+  const [price,setPrice] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [tag, setTag] = useState<string>("");
   const [stock,setStock] = useState<string>("");
@@ -50,6 +52,7 @@ export default function PrivateImage() {
       content: item.content,
       tag: item.tag,
       stock: item.stock,
+      price: item.price,
     }));
 
     setImages(formattedData);
@@ -156,6 +159,11 @@ export default function PrivateImage() {
       setStock(e.target.value);
     }
   }
+  const handlePriceChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    if (e.target.value && e.target.value.length > 0) {
+      setPrice(e.target.value);
+    }
+  }
   return (
     <>
       {auth ? (
@@ -192,6 +200,14 @@ export default function PrivateImage() {
               placeholder="在庫数を入力"
               className="mb-2 border rounded p-2 w-full"
               value={stock}
+            />
+            <input
+              type="text"
+              id="formStock"
+              onChange={handlePriceChange}
+              placeholder="商品の価格を入力(税抜)"
+              className="mb-2 border rounded p-2 w-full"
+              value={price}
             />
             <input
               className="relative mb-4 block w-full rounded border border-neutral-300 px-3 py-2 text-base file:border-none file:bg-neutral-100 file:mr-2 file:py-1 file:px-3 hover:file:bg-neutral-200"
