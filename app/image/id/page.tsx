@@ -9,8 +9,8 @@ interface ImageItem {
   url: string; // 画像のURL
   JAN: number;//JANコード(商品コード)
   content: string;
-  stock:string,
-  price:string;
+  stock:number,
+  price:number;
 }
 
 export default function Image({ params }: { params: Promise<{ id: string }> }) {

@@ -13,8 +13,8 @@ interface ImageItem {
   JAN: number;
   content: string;
   tag: string,
-  stock: string,
-  price:string,
+  stock: number,
+  price:number,
 }
 
 
