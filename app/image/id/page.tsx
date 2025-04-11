@@ -5,7 +5,7 @@ import { supabase } from "@/utils/supabase/supabase";
 
 interface ImageItem {
   id: string; // 画像ID
-  name: string; // 画像名
+  name: string; // 商品名
   url: string; // 画像のURL
   JAN: number;//JANコード(商品コード)
   content: string;
