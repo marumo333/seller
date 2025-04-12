@@ -16,17 +16,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const menuList = [
-    { name: "myPage", link: "#myPage" },
-    { name: "shopEdit", link: "#shopEdit" },
-    { name: "stockInfo", link: "#stockInfo" },
-    { name: "logout", link: "#logout" },
-  ];
+  
 
   return (
     <html lang="ja">
       <body>
-        <Header list={menuList} />
+      <Header/>
         <main className="min-h-screen flex flex-col items-center px-2">
         <ClientWrapper>{children}</ClientWrapper>
         </main>
