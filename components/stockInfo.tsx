@@ -11,11 +11,14 @@ interface shopStock {
 }
 
 export default function StockInfo() {
-    const [shop, setShop] = useState<shopStock[]>([])
+    const [shops, setShops] = useState<shopStock[]>([])
     const [loading, setLoading] = useState(false)
-    useEffect(() => {
-        setLoading(true);
+        
+    useEffect(()=>{
+        getStockData();
+    },[])
         const getStockData = async () => {
+            setLoading(true);
             const { data, error } = await supabase
                 .from("shopPosts")
                 .select("id,name,stock,JAN,price")
@@ -30,10 +33,11 @@ export default function StockInfo() {
                 JAN: item.JAN,
                 price: item.price
             }));
-            setShop(formattedData)
+            setShops(formattedData)
+            setLoading(false)
         }
-        setLoading(false)
-    }, [])
+
+        
 
     if (loading) {
         return (
@@ -45,6 +49,7 @@ export default function StockInfo() {
     return (
         <>
             <h1>商品検索・商品在庫数検索</h1>
+
         </>
     )
 }
