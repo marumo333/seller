@@ -48,7 +48,16 @@ export default function StockInfo() {
     }
     return (
         <>
-            <h1>商品検索・商品在庫数検索</h1>
+            <div className="relative">
+            <h1 className="fixed top-0 right-0 left-0">商品検索・商品在庫数検索</h1>
+        {shops.map((item) => (
+          <><strong key={item.id}></strong><p>在庫数:{item.stock}</p>
+          <p>JANコード:{item.JAN}</p>
+          <p>商品名：{item.name}</p>
+          <p>価格:{item.price}</p>
+          </>
+        ))}
+      </div>
 
         </>
     )
