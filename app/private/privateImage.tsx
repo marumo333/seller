@@ -20,6 +20,7 @@ interface ImageItem {
 
 export default function PrivateImage() {
   const [images, setImages] = useState<ImageItem[]>([]);
+  const [name,setName] = useState<string>("")
   const [JAN, setJAN] = useState<string>("")
   const [price,setPrice] = useState<string>("");
   const [content, setContent] = useState<string>("");
@@ -137,6 +138,11 @@ export default function PrivateImage() {
     return <h1>読み込み中....</h1>;
   }
 
+  const handleNameChange= (e: ChangeEvent<HTMLInputElement>): void =>{
+    if (e.target.value && e.target.value.length > 0) {
+      setName(e.target.value);
+    }
+  }
   function handleJANcodeChange(e: ChangeEvent<HTMLInputElement>): void {
     if (e.target.value && e.target.value.length > 0) {
       setJAN(e.target.value);
@@ -169,6 +175,14 @@ export default function PrivateImage() {
       {auth ? (
         <>
           <form className="mb-4 text-center" onSubmit={onSubmit}>
+          <input
+              type="text"
+              id="formName"
+              onChange={handleNameChange}
+              placeholder="商品名をに入力"
+              className="mb-2 border rounded p-2 w-full"
+              value={name}
+            />
             <input
               type="text"
               id="formJANcode"
