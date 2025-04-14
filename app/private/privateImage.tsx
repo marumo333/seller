@@ -30,8 +30,16 @@ export default function PrivateImage() {
   const [file, setFile] = useState<File | null>(null);
   const auth = useSelector((state: any) => state.auth.isSignIn);
   const [isClient, setIsClient] = useState(false);
-
+  const user =supabase.auth.getUser()
   const listAllImage = async () => {
+    const{
+      data:{user},
+    } = await supabase.auth.getUser()
+
+    if(!user){
+      console.error("ログインしてください");
+      return;
+    }
     setLoadingState("flex justify-center");
 
     const { data, error } = await supabase
