@@ -10,7 +10,7 @@ interface ImageItem {
   id: string;
   name: string;
   url: string;
-  JAN: number;
+  jan: number;
   content: string;
   tag: string,
   stock: number,
@@ -21,7 +21,7 @@ interface ImageItem {
 export default function PrivateImage() {
   const [images, setImages] = useState<ImageItem[]>([]);
   const [name, setName] = useState<string>("")
-  const [JAN, setJAN] = useState<string>("")
+  const [jan, setJan] = useState<string>("")
   const [price, setPrice] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [tag, setTag] = useState<string>("");
@@ -43,8 +43,8 @@ export default function PrivateImage() {
     setLoadingState("flex justify-center");
 
     const { data, error } = await supabase
-      .from("shopPosts")
-      .select("id, name, image_url, content,tag,stock,price");
+      .from("shopposts")
+      .select("id,url,name, image_url, content,tag,stock,price,jan");
 
     if (error) {
       console.error("画像取得エラー:", error);
@@ -57,7 +57,7 @@ export default function PrivateImage() {
       id: item.id,
       name: item.name,
       url: item.image_url,
-      JAN: item.JAN,
+      jan: item.jan,
       content: item.content,
       tag: item.tag,
       stock: item.stock,
@@ -113,13 +113,13 @@ export default function PrivateImage() {
 
     // 3. Supabase の outfit_image テーブルにデータを保存
     const { error: insertError } = await supabase
-      .from("shopPosts")
+      .from("shopposts")
       .insert([
         {
           name: name,
           image_url: publicUrl,
           url: publicUrl, // ← 表示用URL
-          JAN: JAN,
+          jan:jan,
           content: content,
           tag: tag,
           stock: stock,
@@ -155,7 +155,7 @@ export default function PrivateImage() {
   }
   function handleJANcodeChange(e: ChangeEvent<HTMLInputElement>): void {
     if (e.target.value && e.target.value.length > 0) {
-      setJAN(e.target.value);
+      setJan(e.target.value);
     }
   }
 
@@ -199,7 +199,7 @@ export default function PrivateImage() {
               onChange={handleJANcodeChange}
               placeholder="JANコードを入力"
               className="mb-2 border rounded p-2 w-full"
-              value={JAN}
+              value={jan}
             />
             <input
               type="text"
