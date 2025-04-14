@@ -14,29 +14,29 @@ interface ImageItem {
   content: string;
   tag: string,
   stock: number,
-  price:number,
+  price: number,
 }
 
 
 export default function PrivateImage() {
   const [images, setImages] = useState<ImageItem[]>([]);
-  const [name,setName] = useState<string>("")
+  const [name, setName] = useState<string>("")
   const [JAN, setJAN] = useState<string>("")
-  const [price,setPrice] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [tag, setTag] = useState<string>("");
-  const [stock,setStock] = useState<string>("");
+  const [stock, setStock] = useState<string>("");
   const [loadingState, setLoadingState] = useState("hidden");
   const [file, setFile] = useState<File | null>(null);
   const auth = useSelector((state: any) => state.auth.isSignIn);
   const [isClient, setIsClient] = useState(false);
-  const user =supabase.auth.getUser()
+  const user = supabase.auth.getUser()
   const listAllImage = async () => {
-    const{
-      data:{user},
+    const {
+      data: { user },
     } = await supabase.auth.getUser()
 
-    if(!user){
+    if (!user) {
       console.error("ログインしてください");
       return;
     }
@@ -44,7 +44,7 @@ export default function PrivateImage() {
 
     const { data, error } = await supabase
       .from("shopPosts")
-      .select("id, name, image_url, title, content,tag");
+      .select("id, name, image_url, content,tag,stock,price");
 
     if (error) {
       console.error("画像取得エラー:", error);
@@ -116,12 +116,14 @@ export default function PrivateImage() {
       .from("shopPosts")
       .insert([
         {
-          user_id: userId,
-          name: fileName,
-          image_url: publicUrl, // image_url に保存
+          name: name,
+          image_url: publicUrl,
+          url: publicUrl, // ← 表示用URL
           JAN: JAN,
           content: content,
           tag: tag,
+          stock: stock,
+          price: price,
         },
       ]);
 
@@ -146,7 +148,7 @@ export default function PrivateImage() {
     return <h1>読み込み中....</h1>;
   }
 
-  const handleNameChange= (e: ChangeEvent<HTMLInputElement>): void =>{
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
     if (e.target.value && e.target.value.length > 0) {
       setName(e.target.value);
     }
@@ -183,7 +185,7 @@ export default function PrivateImage() {
       {auth ? (
         <>
           <form className="mb-4 text-center" onSubmit={onSubmit}>
-          <input
+            <input
               type="text"
               id="formName"
               onChange={handleNameChange}
