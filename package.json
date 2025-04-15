@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mantine/core": "^7.17.4",
     "@reduxjs/toolkit": "^2.6.1",
     "@supabase/supabase-js": "^2.49.4",
     "compressorjs": "^1.2.1",
