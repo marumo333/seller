@@ -3,14 +3,16 @@
 import React, { useEffect, useState, use } from "react";
 import { supabase } from "@/utils/supabase/supabase";
 
+
 interface ImageItem {
-  id: string; // 画像ID
-  name: string; // 商品名
-  url: string; // 画像のURL
-  JAN: number;//JANコード(商品コード)
-  content: string;
-  stock:number,
-  price:number;
+    id: string;
+    name: string;
+    url: string;
+    jan: number;
+    content: string;
+    tag: string,
+    stock: number,
+    price: number,
 }
 
 export default function Image({ params }: { params: Promise<{ id: string }> }) {
@@ -22,8 +24,8 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
   const fetchImage = async (imageId: string) => {
     setLoading(true);
     const { data, error } = await supabase
-      .from("shopPosts")
-      .select("id,name,image_url,JAN,stock,content,price")
+      .from("shopposts")
+      .select("id,url,name, image_url, content,tag,stock,price,jan")
       .eq("id", imageId)
       .single();
 
@@ -33,13 +35,14 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
       return;
     }
     setImageDetail({
-      id: data.id,
-      name: data.name,
-      url: data.image_url, // DB に保存されている URL を直接使用
-      JAN: data.JAN || "JANコード無し",
-      content: data.content || "説明なし",
-      price:data.price,
-      stock:data.stock,
+        id: data.id,
+        name: data.name,
+        url: data.image_url,
+        jan: data.jan,
+        content: data.content,
+        tag: data.tag,
+        stock: data.stock,
+        price: data.price,
     })
 
     setLoading(false);
@@ -50,17 +53,17 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
     if (!imageDetail) return;
     try {
       const filePath = imageDetail.url.replace(
-        `https://tkkavdiinrmmeeghllrr.supabase.co/storage/v1/object/public/seller/`,
+        `https://tkkavdiinrmmeeghllrr.supabase.co/storage/v1/object/public/outfit_image/`,
         ""
       );
       const { error: deleteError } = await supabase.storage
-        .from("shopposts")
+        .from("posts")
         .remove([filePath])
 
       if (deleteError) throw new Error(`削除エラー${deleteError.message}`)
 
       const { error: dbError } = await supabase
-        .from("shopPosts")
+        .from("posts")
         .delete()
         .eq("id", imageDetail.id);
 
@@ -118,18 +121,26 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
             </h1>
             <p className="text-xl font-semibold text-gray-800 mb-2">
               JANコード：
-              <span className="font-normal text-gray-700">{imageDetail.JAN || "（なし）"}</span>
+              <span className="font-normal text-gray-700">{imageDetail.jan || "（なし）"}</span>
+            </p>
+            <p className="text-xl font-semibold text-gray-800 mb-2">
+              商品名：
+              <span className="font-normal text-gray-700">{imageDetail.name || "（なし）"}</span>
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-              商品の概要：
+              商品の詳細：
               <span className="font-normal">{imageDetail.content || "（なし）"}</span>
+            </p>
+            <p className="text-xl font-semibold text-gray-800 mb-2">
+              ターゲット層：
+              <span className="font-normal text-gray-700">{imageDetail.tag || "（なし）"}</span>
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
               在庫数：
               <span className="font-normal">{imageDetail.stock || "（なし）"}</span>
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-              商品の価格：
+              価格：
               <span className="font-normal">{imageDetail.price || "（なし）"}</span>
             </p>
           </div>
