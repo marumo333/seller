@@ -2,6 +2,7 @@ import "./globals.css";
 import React from "react";
 import Header from "@/components/Header";
 import ClientWrapper from "./clientWrapper";
+import Providers from "./provider";
 
 const defaultURL = process.env.NEXT_PUBLIC_VERCEL_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
@@ -21,10 +22,12 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
+        <Providers>
       <Header/>
         <main className="min-h-screen flex flex-col items-center px-2">
         <ClientWrapper>{children}</ClientWrapper>
         </main>
+        </Providers>
       </body>
     </html>
   );
