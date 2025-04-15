@@ -1,24 +1,38 @@
-"use client";
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
+"use client"
+
+import { useState,useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
+import { useSetRecoilState } from "recoil";
+import { isMobileState } from "./atoms";
+import MobileComponent from "./MobileComponent";
+import PCComponent from "./PCComponent";
 
 export default function Header() {
+    const [isClient, setIsClient] = useState(false);
+    const isMobile = useMediaQuery({ query: '(max-width: 1024px)' });
+    const setIsMobile = useSetRecoilState(isMobileState);
+  
+    useEffect(() => {
+      setIsClient(true);
+    }, []);
+  
+    useEffect(() => {
+      if (isClient) {
+        setIsMobile(isMobile);
+      }
+    }, [isMobile, isClient]);
+  
+    // ✅ クライアントで判定できるようになるまで描画しない
+    if (!isClient) return null;
+  
     return (
-        <nav className="flex items-center justify-between border-b border-gray-200 px-4 py-2">
-            {/* ロゴ＋タイトル */}
-            <Link href="/" className="flex items-center space-x-2">
-                <Image src="/seller.png" alt="Sellerロゴ" width={50} height={25} />
-                <span className="text-2xl font-bold text-blue-900">Seller</span>
-            </Link>
-
-            {/* メニュー */}
-            <ul className="hidden md:flex space-x-6 text-blue-900 font-bold">
-                <li><Link href="/logout">ログアウト</Link></li>
-                <li><Link href="/myPage">マイページ</Link></li>
-                <li><Link href="/shopEdit">商品の編集</Link></li>
-                <li><Link href="/stockInfo">在庫情報</Link></li>
-            </ul>
-        </nav>
+      <>
+        {isMobile ? (
+          <MobileComponent className="lg:hidden" />
+        ) : (
+          <PCComponent className="max-lg:hidden" />
+        )}
+      </>
     );
-}
+  }
+  
