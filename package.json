@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@mantine/core": "^7.17.4",
+    "@mui/material": "^7.0.2",
     "@reduxjs/toolkit": "^2.6.1",
     "@supabase/supabase-js": "^2.49.4",
     "compressorjs": "^1.2.1",
+    "lodash": "^4.17.21",
     "next": "15.2.4",
     "react": "^19.0.0",
     "react-cookie": "^8.0.1",
@@ -27,6 +29,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/lodash": "^4.17.16",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
