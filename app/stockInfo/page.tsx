@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from "react";
 import { supabase } from "@/utils/supabase/supabase";
+import Link from "next/link";
 
 interface shopStock {
     id: number,
@@ -51,8 +52,11 @@ export default function StockInfo() {
     return (
         <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
             <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
-                商品検索・商品在庫数検索
+                商品在庫
             </h1>
+            <Link href="/search" className="flex justify-center items-center w-[300px] h-[60px] text-[#333] text-lg font-bold bg-[#7dca65] rounded-[20px] border-2 border-[#325328] no-underline">
+                商品を検索
+            </Link>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {shops.map((item) => (
                     <div key={item.id} className="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
