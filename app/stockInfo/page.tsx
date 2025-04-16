@@ -6,7 +6,7 @@ interface shopStock {
     id: number,
     name: string,
     stock: number,
-    JAN: string,
+    jan: string,
     price: number,
 }
 
@@ -21,8 +21,8 @@ export default function StockInfo() {
     const getStockData = async () => {
         setLoading(true);
         const { data, error } = await supabase
-            .from("shopPosts")
-            .select("id,name,stock,JAN,price");
+            .from("shopposts")
+            .select("id,name,stock,jan,price");
 
         if (error) {
             console.error("商品の在庫情報を取得できませんでした。", error)
@@ -32,7 +32,7 @@ export default function StockInfo() {
             id: item.id,
             name: item.name,
             stock: item.stock,
-            JAN: item.JAN,
+            jan: item.jan,
             price: item.price
         }));
         setShops(formattedData);
@@ -56,7 +56,7 @@ export default function StockInfo() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {shops.map((item) => (
                     <div key={item.id} className="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
-                        <p className="text-sm text-gray-500">JANコード: {item.JAN}</p>
+                        <p className="text-sm text-gray-500">JANコード: {item.jan}</p>
                         <h2 className="text-lg font-semibold text-gray-800">{item.name}</h2>
                         <p className="text-blue-600 font-medium">価格: ¥{item.price}</p>
                         <p className="text-green-600 font-medium">在庫数: {item.stock}</p>
