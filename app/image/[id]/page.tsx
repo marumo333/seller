@@ -165,7 +165,7 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
             >
               商品情報の削除
             </button>
-           <ShopEdit/>
+           <ShopEdit id={imageDetail.id}/>
           </div>
         </>
       ) : (
