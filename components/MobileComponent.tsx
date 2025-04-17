@@ -1,3 +1,4 @@
+"use client"
 import { Burger, Drawer } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
 import Link from "next/link"
@@ -34,9 +35,9 @@ export default function MobileComponent({ className }: { className?: string }) {
                                 </div>
                             </Drawer>
                         </div>
-                        <p className="flex w-full items-center justify-center text-xl font-bold">
-                            seller
-                        </p>
+                        <Link href="/" className="text-xl font-bold text-white">
+                            Seller
+                        </Link>
                     </div>
                 </div >
             </header >

@@ -5,10 +5,10 @@ import Image from "next/image";
 
 export default function PCComponent({ className }: { className?: string }) {
     return (
-        <nav className="flex items-center justify-between border-b border-gray-200 px-4 py-2">
+        <nav className={`flex items-center justify-between border-b border-gray-200 px-4 py-2 ${className ?? ""}`}>
             {/* ロゴ＋タイトル */}
             <Link href="/" className="flex items-center space-x-2">
-                <Image src="/seller.png" alt="Sellerロゴ" width={50} height={25} />
+                <Image src="/seller.png" alt="Sellerロゴ" width={50} height={25} priority/>
                 <span className="text-2xl font-bold text-blue-900">Seller</span>
             </Link>
 
