@@ -14,6 +14,7 @@ export default function Index() {
           width={600}
           height={600}
           className="w-[300px] sm:w-[400px] lg:w-[500px] object-contain"
+          priority
         />
       </div>
 

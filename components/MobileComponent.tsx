@@ -30,7 +30,6 @@ export default function MobileComponent({ className }: { className?: string }) {
                                     <Link href="/logout" className="mb-4">ログアウト</Link>
                                     <Link href="/private" className="mb-4">商品一覧</Link>
                                     <Link href="/myPage" className="mb-4">マイページ</Link>
-                                    <Link href="/shopEdit" className="mb-4">商品の編集</Link>
                                     <Link href="/stockInfo" className="mb-4">在庫情報</Link>
                                 </div>
                             </Drawer>
