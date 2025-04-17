@@ -1,16 +1,18 @@
 "use client"
-import React, { ChangeEvent } from "react";
-import { useState, useEffect } from "react";
+import React, { ChangeEvent, useEffect } from "react";
+import { useState} from "react";
 import { supabase } from "@/utils/supabase/supabase";
+import { useRouter } from "next/navigation";
 
 interface EditShop {
     stock: string;
     price: string;
 }
 export default function ShopEdit({ id }: { id: string }) {
-    const [edit, setEdit] = useState<EditShop[]>([]);
     const [stock, setStock] = useState<string>("");
     const [price, setPrice] = useState<string>("");
+    const router = useRouter();
+      
     // 画像アップロード処理
     const onSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -27,12 +29,13 @@ export default function ShopEdit({ id }: { id: string }) {
                     price: price,
                 })
             .eq("id", id)
-            if(data){
-    setEdit([{stock,price}])
-            }
     if (updateError) {
         console.error("DB 挿入エラー:", updateError);
         return;
+    }
+    if(data){
+        alert("更新しました")
+        router.push("/private")
     }
 };
 const handleStockChange = (e: ChangeEvent<HTMLInputElement>): void => {
