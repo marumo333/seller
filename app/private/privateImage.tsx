@@ -227,7 +227,7 @@ export default function PrivateImage() {
             />
             <input
               type="text"
-              id="formStock"
+              id="formPrice"
               onChange={handlePriceChange}
               placeholder="商品の価格を入力(税抜)"
               className="mb-2 border rounded p-2 w-full"
