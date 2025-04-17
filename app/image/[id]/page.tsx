@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, use } from "react";
 import { supabase } from "@/utils/supabase/supabase";
-
+import ShopEdit from "./shopEdit"
 
 interface ImageItem {
     id: string;
@@ -53,7 +53,7 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
     if (!imageDetail) return;
     try {
       const filePath = imageDetail.url.replace(
-        `https://tkkavdiinrmmeeghllrr.supabase.co/storage/v1/object/public/outfit_image/`,
+        `https://tkkavdiinrmmeeghllrr.supabase.co/storage/v1/object/public/shopposts/`,
         ""
       );
       const { error: deleteError } = await supabase.storage
@@ -163,8 +163,9 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
               onClick={handleDelete}
               className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow-md"
             >
-              投稿の削除
+              商品情報の削除
             </button>
+           <ShopEdit/>
           </div>
         </>
       ) : (

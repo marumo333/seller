@@ -22,7 +22,6 @@ export default function Header() {
       }
     }, [isMobile, isClient]);
   
-    // ✅ クライアントで判定できるようになるまで描画しない
     if (!isClient) return null;
   
     return (
