@@ -113,70 +113,75 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
   }
 
   return (
-    <div className="p-4">
-      {imageDetail ? (
-        <>
-          <div className="mb-6">
-            <h1 className="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">
-              商品名: {imageDetail.name}
-            </h1>
-            <p className="text-xl font-semibold text-gray-800 mb-2">
-              JANコード：
-              <span className="font-normal text-gray-700">{imageDetail.jan || "（なし）"}</span>
-            </p>
-            <p className="text-xl font-semibold text-gray-800 mb-2">
-              商品名：
-              <span className="font-normal text-gray-700">{imageDetail.name || "（なし）"}</span>
-            </p>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              商品の詳細：
-              <span className="font-normal">{imageDetail.content || "（なし）"}</span>
-            </p>
-            <p className="text-xl font-semibold text-gray-800 mb-2">
-              ターゲット層：
-              <span className="font-normal text-gray-700">{imageDetail.tag || "（なし）"}</span>
-            </p>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              在庫数：
-              <span className="font-normal">{imageDetail.stock || "（なし）"}</span>
-            </p>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              価格：
-              <span className="font-normal">{imageDetail.price || "（なし）"}</span>
-            </p>
-          </div>
-          <div className="mb-6">
-            <img
-              src={imageDetail.url}
-              alt={imageDetail.name}
-              className="object-contain max-w-full max-h-[400px] rounded-lg shadow-md"
-            />
-          </div>
-          <div className="flex justify-center gap-4">
-            <a
-              href={imageDetail.url}
-              download={imageDetail.name}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow-md"
-            >
-              ダウンロード
-            </a>
-            <button
-              onClick={handleDelete}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow-md"
-            >
-              商品情報の削除
-            </button>
-            <div className="text-lg">
-              <QRCode url="/image/${encodeURIComponent(item.id)}" />
-            </div>
-            <ShopEdit id={imageDetail.id} />
-          </div>
-        </>
-      ) : (
-        <p className="text-center text-gray-500">画像の詳細を取得できませんでした。</p>
-      )}
-    </div>
+    <div className="p-6 max-w-3xl mx-auto bg-white rounded-lg shadow-md">
+      <h1 className="text-3xl font-bold text-blue-900 mb-6 border-b pb-2">
+        商品名: {imageDetail.name}
+      </h1>
 
+      {/* 商品情報セクション */}
+      <div className="space-y-4 text-gray-800">
+        <div className="text-lg">
+          <strong>JANコード：</strong>
+          <span className="ml-2 text-gray-600">{imageDetail.jan || "（なし）"}</span>
+        </div>
+        <div className="text-lg">
+          <strong>商品名：</strong>
+          <span className="ml-2 text-gray-600">{imageDetail.name || "（なし）"}</span>
+        </div>
+        <div className="text-lg">
+          <strong>商品詳細：</strong>
+          <span className="ml-2 text-gray-600">{imageDetail.content || "（なし）"}</span>
+        </div>
+        <div className="text-lg">
+          <strong>ターゲット層：</strong>
+          <span className="ml-2 text-gray-600">{imageDetail.tag || "（なし）"}</span>
+        </div>
+        <div className="text-lg">
+          <strong>在庫数：</strong>
+          <span className="ml-2 text-gray-600">{imageDetail.stock ?? "（なし）"}</span>
+        </div>
+        <div className="text-lg">
+          <strong>価格：</strong>
+          <span className="ml-2 text-gray-600">{imageDetail.price ?? "（なし）"}</span>
+        </div>
+      </div>
+
+      {/* 画像表示 */}
+      <div className="my-6">
+        <img
+          src={imageDetail.url}
+          alt={imageDetail.name}
+          className="object-contain w-full max-h-[400px] rounded-lg border border-gray-200 shadow"
+        />
+      </div>
+
+      {/* 操作ボタンエリア */}
+      <div className="flex flex-wrap justify-center gap-4 mb-6">
+        <a
+          href={imageDetail.url}
+          download={imageDetail.name}
+          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md shadow"
+        >
+          ダウンロード
+        </a>
+        <button
+          onClick={handleDelete}
+          className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md shadow"
+        >
+          商品情報の削除
+        </button>
+      </div>
+
+      {/* QRコード & 編集フォーム */}
+      <div className="mt-6 flex flex-col md:flex-row justify-between gap-6">
+        <div className="md:w-1/2 flex items-center justify-center border p-4 rounded-md shadow">
+          <QRCode url={`/image/${encodeURIComponent(imageDetail.id)}`} />
+        </div>
+        <div className="md:w-1/2">
+          <ShopEdit id={imageDetail.id} />
+        </div>
+      </div>
+    </div>
 
   );
 }

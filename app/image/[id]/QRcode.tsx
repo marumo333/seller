@@ -15,7 +15,6 @@ const QRcode:FC<QRcodeProps>=(props)=>{
           bgColor={"#FF0000"}
           fgColor={"#FFC0CB"}
           level={"L"}
-          includeMargin={false}
           imageSettings={{
             src: "/favicon.ico",
             x: undefined,
