@@ -3,16 +3,17 @@
 import React, { useEffect, useState, use } from "react";
 import { supabase } from "@/utils/supabase/supabase";
 import ShopEdit from "./shopEdit"
+import QRCode from "./QRcode";
 
 interface ImageItem {
-    id: string;
-    name: string;
-    url: string;
-    jan: number;
-    content: string;
-    tag: string,
-    stock: number,
-    price: number,
+  id: string;
+  name: string;
+  url: string;
+  jan: number;
+  content: string;
+  tag: string,
+  stock: number,
+  price: number,
 }
 
 export default function Image({ params }: { params: Promise<{ id: string }> }) {
@@ -35,14 +36,14 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
       return;
     }
     setImageDetail({
-        id: data.id,
-        name: data.name,
-        url: data.image_url,
-        jan: data.jan,
-        content: data.content,
-        tag: data.tag,
-        stock: data.stock,
-        price: data.price,
+      id: data.id,
+      name: data.name,
+      url: data.image_url,
+      jan: data.jan,
+      content: data.content,
+      tag: data.tag,
+      stock: data.stock,
+      price: data.price,
     })
 
     setLoading(false);
@@ -165,7 +166,10 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
             >
               商品情報の削除
             </button>
-           <ShopEdit id={imageDetail.id}/>
+            <div className="text-lg">
+              <QRCode url="/image/${encodeURIComponent(item.id)}" />
+            </div>
+            <ShopEdit id={imageDetail.id} />
           </div>
         </>
       ) : (
