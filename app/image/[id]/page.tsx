@@ -188,10 +188,19 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
           商品情報の削除
         </button>
       </div>
-      <button onClick={() => clickTranslate('EN-US')}>Translate English</button>
-      <p className="mt-2 text-gray-700 whitespace-pre-wrap">
-        翻訳結果:{"\n"}{translate}
-      </p>
+
+      <div className="my-4">
+        <button
+          onClick={() => clickTranslate('EN-US')}
+          className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md shadow"
+        >
+          Translate English
+        </button>
+        <div className="mt-3 p-4 bg-gray-100 border border-gray-300 rounded-md whitespace-pre-wrap text-gray-800">
+          <strong>Translation result:</strong><br />
+          {translate || "ここに翻訳結果が表示されます"}
+        </div>
+      </div>
 
 
       {/* QRコード & 編集フォーム */}
