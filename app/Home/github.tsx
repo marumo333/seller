@@ -56,7 +56,7 @@ export default function Github() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
-        redirectTo: `http://localhost:3000/redirect`,
+        redirectTo: `https://seller-weld.vercel.app/redirect`,
       },
     })
     router.push("/private")

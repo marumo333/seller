@@ -56,7 +56,7 @@ export default function Google() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `http://localhost:3000/redirect`,
+        redirectTo: `https://seller-weld.vercel.app/redirect`,
       },
     })
     router.push("/private")
