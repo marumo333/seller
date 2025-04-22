@@ -49,6 +49,14 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
 
     setLoading(false);
   };
+  const [translate, setTranslate] = useState<string>("");
+
+
+  //翻訳機能を追加
+  function clickTranslate(my_text: string, my_target_lang: DeeplLanguages) {
+    const translations = Translator(my_text, my_target_lang)
+    translations.then((result) => setTranslate(imageDetail||""))
+  }
 
 
   const handleDelete = async () => {
@@ -172,6 +180,10 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
           商品情報の削除
         </button>
       </div>
+      <button onClick={() => clickTranslate(translate, 'EN-US')}>Translate English</button><br /><br />
+      <p className="mt-2 text-gray-700 whitespace-pre-wrap">
+        翻訳結果: {translate}
+      </p>
 
       {/* QRコード & 編集フォーム */}
       <div className="mt-6 flex flex-col md:flex-row justify-between gap-6">
