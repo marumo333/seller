@@ -206,7 +206,7 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
       {/* QRコード & 編集フォーム */}
       <div className="mt-6 flex flex-col md:flex-row justify-between gap-6">
         <div className="md:w-1/2 flex items-center justify-center border p-4 rounded-md shadow">
-          <QRCode url={`http://localhost:3000/app/image/${encodeURIComponent(imageDetail.id)}`} />
+          <QRCode url={`https://seller-weld.vercel.app/app/image/${encodeURIComponent(imageDetail.id)}`} />
         </div>
         <div className="md:w-1/2">
           <ShopEdit id={imageDetail.id} />
