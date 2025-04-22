@@ -53,11 +53,19 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
 
 
   //翻訳機能を追加
-  function clickTranslate(my_text: string, my_target_lang: DeeplLanguages) {
-    const translations = Translator(my_text, my_target_lang)
-    translations.then((result) => setTranslate(imageDetail||""))
+  function clickTranslate(my_target_lang: DeeplLanguages) {
+    if (!imageDetail) return;
+    const textToTranslate = `
+     商品名：${imageDetail.name}
+     商品詳細：${imageDetail.content}
+     ターゲット層：${imageDetail.tag}
+     在庫数：${imageDetail.stock}
+     価格：${imageDetail.price}
+    `
+    Translator(textToTranslate, my_target_lang).then((result) => {
+      setTranslate(result.text);
+    });
   }
-
 
   const handleDelete = async () => {
     if (!imageDetail) return;
@@ -180,10 +188,11 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
           商品情報の削除
         </button>
       </div>
-      <button onClick={() => clickTranslate(translate, 'EN-US')}>Translate English</button><br /><br />
+      <button onClick={() => clickTranslate('EN-US')}>Translate English</button>
       <p className="mt-2 text-gray-700 whitespace-pre-wrap">
-        翻訳結果: {translate}
+        翻訳結果:{"\n"}{translate}
       </p>
+
 
       {/* QRコード & 編集フォーム */}
       <div className="mt-6 flex flex-col md:flex-row justify-between gap-6">
