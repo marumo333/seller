@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@mui/styled-engine': '@mui/styled-engine-sc',
+      '@mui/styled-engine': '@mui/styled-engine', // Emotion を使うのでそのままでOK
     };
     return config;
   },
