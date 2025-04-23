@@ -1,8 +1,13 @@
-import React, { ChangeEvent} from "react";
+"use client"
+import React, { ChangeEvent, useEffect } from "react";
 import { useState} from "react";
 import { supabase } from "@/utils/supabase/supabase";
 import { useRouter } from "next/navigation";
 
+interface EditShop {
+    stock: string;
+    price: string;
+}
 export default function ShopEdit({ id }: { id: string }) {
     const [stock, setStock] = useState<string>("");
     const [price, setPrice] = useState<string>("");
