@@ -13,7 +13,7 @@
 
 ### バックエンド（BaaS）
 - [Supabase](https://supabase.com/)
-
+- [DeeplAPI](https://support.deepl.com/hc/ja/articles/360021200939-DeepL-API-Free)
 ---
 
 ## 📝 アプリ概要
