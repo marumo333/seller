@@ -17,8 +17,7 @@ interface ImageItem {
   price: number,
 }
 
-export default function Image({ params }: { params: Promise<{ id: string }> }) {
-  const resolvedParams = use(params);
+export default function Image({ params }: { params: { id: string } }) {
   const [imageDetail, setImageDetail] = useState<ImageItem | null>(null);
   const [loading, setLoading] = useState(false);
   const [userId, setUserId] = useState<string>("");
@@ -101,17 +100,17 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
     }
   };
   useEffect(() => {
-    if (resolvedParams.id) {
-      fetchImage(resolvedParams.id);
+    if (params.id) {
+      fetchImage(params.id);
       fetchUser();
     }
-  }, [resolvedParams.id]);
+  }, [params.id]);
 
   useEffect(() => {
-    if (resolvedParams.id) {
-      fetchImage(resolvedParams.id);
+    if (params.id) {
+      fetchImage(params.id);
     }
-  }, [resolvedParams.id])
+  }, [params.id])
 
   if (loading) {
     return (
