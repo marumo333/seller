@@ -4,91 +4,106 @@ import { useState, ChangeEvent } from "react";
 import { supabase } from "@/utils/supabase/supabase";
 import { v4 as uuid4 } from "uuid";
 
-interface Props {
-  onUploadComplete: () => void;
-}
+export default function Page() {
+    const [name, setName] = useState("");
+    const [jan, setJan] = useState("");
+    const [price, setPrice] = useState("");
+    const [content, setContent] = useState("");
+    const [tag, setTag] = useState("");
+    const [stock, setStock] = useState("");
+    const [file, setFile] = useState<File | null>(null);
+    const [status, setStatus] = useState<string | null>(null);
 
-export default function Post({ onUploadComplete }: Props) {
-  const [name, setName] = useState("");
-  const [jan, setJan] = useState("");
-  const [price, setPrice] = useState("");
-  const [content, setContent] = useState("");
-  const [tag, setTag] = useState("");
-  const [stock, setStock] = useState("");
-  const [file, setFile] = useState<File | null>(null);
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files?.[0]) {
+            setFile(e.target.files[0]);
+        }
+    };
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setFile(e.target.files[0]);
-    }
-  };
+    const onSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setStatus(null);
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!file || !file.type.match("image.*")) return alert("画像ファイルを選択してください");
+        if (!file || !file.type.match("image.*")) {
+            alert("画像ファイルを選択してください");
+            return;
+        }
 
-    const { data: userData, error: userError } = await supabase.auth.getUser();
-    if (userError || !userData?.user) return alert("ログインしてください");
+        const { data: userData, error: userError } = await supabase.auth.getUser();
+        if (userError || !userData?.user) {
+            alert("ログインしてください");
+            return;
+        }
 
-    const fileName = `${uuid4()}.${file.name.split(".").pop()}`;
-    const filePath = `img/${fileName}`;
-    const { error: uploadError } = await supabase.storage.from("shopposts").upload(filePath, file);
+        const fileName = `${uuid4()}.${file.name.split(".").pop()}`;
+        const filePath = `img/${fileName}`;
 
-    if (uploadError) {
-      alert("アップロード失敗: " + uploadError.message);
-      return;
-    }
+        const { error: uploadError } = await supabase.storage
+            .from("shopposts")
+            .upload(filePath, file);
 
-    const { data: publicUrlData } = supabase.storage.from("shopposts").getPublicUrl(filePath);
-    const publicUrl = publicUrlData.publicUrl;
+        if (uploadError) {
+            alert("アップロード失敗: " + uploadError.message);
+            return;
+        }
 
-    const { error: insertError } = await supabase.from("shopposts").insert([
-      { name, image_url: publicUrl, url: publicUrl, jan, content, tag, stock, price },
-    ]);
+        const { data: publicUrlData } = supabase.storage
+            .from("shopposts")
+            .getPublicUrl(filePath);
 
-    if (insertError) {
-      alert("登録失敗: " + insertError.message);
-      return;
-    }
+        const publicUrl = publicUrlData.publicUrl;
 
-    setFile(null);
-    onUploadComplete();
-  };
+        const { error: insertError } = await supabase.from("shopposts").insert([
+            { name, image_url: publicUrl, url: publicUrl, jan, content, tag, stock, price },
+        ]);
 
-  return (
-    <form className="mb-4 text-center" onSubmit={onSubmit}>
-      {/* 各入力フォーム */}
-      {[
-        { value: name, setter: setName, placeholder: "商品名" },
-        { value: jan, setter: setJan, placeholder: "JANコード" },
-        { value: content, setter: setContent, placeholder: "内容" },
-        { value: tag, setter: setTag, placeholder: "タグ" },
-        { value: stock, setter: setStock, placeholder: "在庫" },
-        { value: price, setter: setPrice, placeholder: "価格（税抜）" },
-      ].map(({ value, setter, placeholder }, idx) => (
-        <input
-          key={idx}
-          type="text"
-          className="mb-2 border rounded p-2 w-full"
-          placeholder={placeholder}
-          value={value}
-          onChange={(e) => setter(e.target.value)}
-        />
-      ))}
+        if (insertError) {
+            alert("登録失敗: " + insertError.message);
+            return;
+        }
 
-      <input
-        className="mb-4 block w-full border px-3 py-2 file:bg-neutral-100 hover:file:bg-neutral-200"
-        type="file"
-        accept="image/*"
-        onChange={handleFileChange}
-      />
-      <button
-        type="submit"
-        disabled={!file}
-        className="bg-blue-700 text-white py-2 px-5 rounded disabled:opacity-50"
-      >
-        送信
-      </button>
-    </form>
-  );
+        setFile(null);
+        setStatus("アップロードが完了しました！");
+    };
+
+    return (
+        <div className="p-4 max-w-xl mx-auto">
+            <h1 className="text-2xl font-bold mb-4">商品投稿</h1>
+
+            <form className="mb-4 text-center" onSubmit={onSubmit}>
+                {[{ v: name, s: setName, p: "商品名" },
+                { v: jan, s: setJan, p: "JANコード" },
+                { v: content, s: setContent, p: "内容" },
+                { v: tag, s: setTag, p: "タグ" },
+                { v: stock, s: setStock, p: "在庫" },
+                { v: price, s: setPrice, p: "価格（税抜）" },
+                ].map(({ v, s, p }, i) => (
+                    <input
+                        key={i}
+                        type="text"
+                        className="mb-2 border rounded p-2 w-full"
+                        placeholder={p}
+                        value={v}
+                        onChange={(e) => s(e.target.value)}
+                    />
+                ))}
+
+                <input
+                    className="mb-4 block w-full border px-3 py-2 file:bg-neutral-100 hover:file:bg-neutral-200"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                />
+                <button
+                    type="submit"
+                    disabled={!file}
+                    className="bg-blue-700 text-white py-2 px-5 rounded disabled:opacity-50"
+                >
+                    送信
+                </button>
+            </form>
+
+            {status && <p className="text-green-600">{status}</p>}
+        </div>
+    );
 }
