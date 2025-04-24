@@ -18,7 +18,10 @@ export default function Private() {
         <>
             {auth ? (
                 <>
-                    <h1 className="">商品一覧</h1>
+                    <h1 className="relative inline-block px-[55px]">
+                        商品一覧
+                    </h1>
+
                     <p className="mb-4">
                         *表示された画像は5分でリンクが不可になります。<br />
                         再度アクサスした場合はリロードボタンを押してください。
