@@ -1,13 +1,8 @@
 // app/shopEdit/[id]/page.tsx
+import dynamic from "next/dynamic";
 
-import ShopEditForm from "./shopEditForm";
+const ShopEditForm = dynamic(() => import("./shopEditForm"), { ssr: false });
 
-type PageProps = {
-  params: {
-    id: string;
-  };
-};
-
-export default function Page({ params }: PageProps) {
+export default async function Page({ params }: { params: { id: string } }) {
   return <ShopEditForm id={params.id} />;
 }
