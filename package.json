@@ -22,7 +22,7 @@
     "deepl": "^1.0.13",
     "install": "^0.13.0",
     "lodash": "^4.17.21",
-    "next": "15.2.4",
+    "next": "15.1.2",
     "qrcode.react": "^4.2.0",
     "react": "^19.0.0",
     "react-cookie": "^8.0.1",
