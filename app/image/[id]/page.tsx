@@ -1,13 +1,14 @@
-import dynamic from "next/dynamic";
+// app/image/[id]/page.tsx
+"use client";
 
-// 👇 クライアントコンポーネントを動的読み込み（SSR無効）
-const ImageClient = dynamic(() => import("./ImageClient"), { ssr: false });
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import ImageClient from "./ImageClient"; // そのままでOK
 
-export default function Page({ params }: { params: { id: string } }) {
-  return <ImageClient id={params.id} />;
+export default function Page() {
+  const params = useParams(); // 👈 useParams で id を取得
+  const id = typeof params?.id === "string" ? params.id : Array.isArray(params?.id) ? params.id[0] : "";
+
+  return <ImageClient id={id} />;
 }
 
-// 👇 型バグ防止のため generateStaticParams を削除またはこのまま
-export async function generateStaticParams() {
-  return [];
-}
