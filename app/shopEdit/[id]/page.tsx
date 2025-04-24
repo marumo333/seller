@@ -1,10 +1,11 @@
-// app/shopEdit/[id]/page.tsx
-import ShopEditForm from "./shopEditForm"; // ← 正しい大文字小文字で！
+"use client";
 
-export default function Page({ params }: { params: { id: string } }) {
-  return <ShopEditForm id={params.id} />;
-}
+import { useParams } from "next/navigation";
+import ShopEditForm from "./shopEditForm"; // クライアント側フォーム
 
-export async function generateStaticParams() {
-  return [];
+export default function Page() {
+  const params = useParams();
+  const id = typeof params?.id === "string" ? params.id : Array.isArray(params?.id) ? params.id[0] : "";
+
+  return <ShopEditForm id={id} />;
 }
