@@ -155,6 +155,11 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
         >
           ダウンロード
         </a>
+        <a >
+          <link href="/shopEdit" className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md shadow">
+          商品情報を編集(管理者のみ可能)
+          </link>
+        </a>
       </div>
 
       <div className="my-4">
