@@ -3,7 +3,6 @@ import { Translator } from '@/libs/deepl'
 import { DeeplLanguages } from 'deepl'
 import React, { useEffect, useState, use } from "react";
 import { supabase } from "@/utils/supabase/supabase";
-import ShopEdit from "./shopEdit"
 import QRCode from "./QRcode";
 
 interface ImageItem {
@@ -67,32 +66,7 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
     });
   }
 
-  const handleDelete = async () => {
-    if (!imageDetail) return;
-    try {
-      const filePath = imageDetail.url.replace(
-        `https://tkkavdiinrmmeeghllrr.supabase.co/storage/v1/object/public/shopposts/`,
-        ""
-      );
-      const { error: deleteError } = await supabase.storage
-        .from("posts")
-        .remove([filePath])
-
-      if (deleteError) throw new Error(`削除エラー${deleteError.message}`)
-
-      const { error: dbError } = await supabase
-        .from("posts")
-        .delete()
-        .eq("id", imageDetail.id);
-
-      if (dbError) throw new Error(`データベース削除エラー:${dbError.message}`)
-
-      alert("画像を削除しました")
-      setImageDetail(null);
-    } catch (error: any) {
-      alert(error.message);
-    }
-  }
+  
 
   const fetchUser = async () => {
     const { data, error } = await supabase.auth.getUser();
@@ -181,12 +155,6 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
         >
           ダウンロード
         </a>
-        <button
-          onClick={handleDelete}
-          className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md shadow"
-        >
-          商品情報の削除
-        </button>
       </div>
 
       <div className="my-4">
@@ -203,13 +171,10 @@ export default function Image({ params }: { params: Promise<{ id: string }> }) {
       </div>
 
 
-      {/* QRコード & 編集フォーム */}
+      {/* QRコード */}
       <div className="mt-6 flex flex-col md:flex-row justify-between gap-6">
         <div className="md:w-1/2 flex items-center justify-center border p-4 rounded-md shadow">
           <QRCode url={`https://seller-weld.vercel.app/image/${encodeURIComponent(imageDetail.id)}`} />
-        </div>
-        <div className="md:w-1/2">
-          <ShopEdit id={imageDetail.id} />
         </div>
       </div>
     </div>
