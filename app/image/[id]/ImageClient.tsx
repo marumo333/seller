@@ -5,6 +5,7 @@ import { DeeplLanguages } from 'deepl'
 import React, { useEffect, useState } from "react";
 import { supabase } from "@/utils/supabase/supabase";
 import QRcode from './QRcode';
+import Link from "next/link";
 
 interface ImageItem {
   id: string;
@@ -143,9 +144,9 @@ export default function ImageClient({ id }: { id: string }) {
           ダウンロード
         </a>
         <a >
-          <link href="/shopEdit" className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md shadow">
+          <Link href="/shopEdit" className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md shadow">
           商品情報を編集(管理者のみ可能)
-          </link>
+          </Link>
         </a>
       </div>
 
