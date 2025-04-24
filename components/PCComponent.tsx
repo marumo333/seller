@@ -18,6 +18,7 @@ export default function PCComponent({ className }: { className?: string }) {
                 <li><Link href="/private">商品一覧</Link></li>
                 <li><Link href="/myPage">マイページ</Link></li>
                 <li><Link href="/stockInfo">在庫情報</Link></li>
+                <li><Link href="/post">商品を投稿</Link></li>
             </ul>
         </nav>
     );

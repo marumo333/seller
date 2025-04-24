@@ -31,6 +31,7 @@ export default function MobileComponent({ className }: { className?: string }) {
                                     <Link href="/private" className="mb-4">商品一覧</Link>
                                     <Link href="/myPage" className="mb-4">マイページ</Link>
                                     <Link href="/stockInfo" className="mb-4">在庫情報</Link>
+                                    <Link href="/post" className="mb-4">商品を投稿</Link>
                                 </div>
                             </Drawer>
                         </div>
