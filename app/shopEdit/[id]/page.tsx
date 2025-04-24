@@ -1,6 +1,13 @@
 // app/shopEdit/[id]/page.tsx
+
 import ShopEditForm from "./shopEditForm";
 
-export default function Page({ params }: { params: { id: string } }) {
+type PageProps = {
+  params: {
+    id: string;
+  };
+};
+
+export default function Page({ params }: PageProps) {
   return <ShopEditForm id={params.id} />;
 }
