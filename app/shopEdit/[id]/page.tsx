@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 
 
 export default function ShopEdit({ params }: { params: { id: string } }) {
-    const id ={params}
+    const {id} =params
     const [stock, setStock] = useState<string>("");
     const [price, setPrice] = useState<string>("");
     const router = useRouter();
