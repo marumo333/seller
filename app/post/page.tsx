@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { supabase } from "@/utils/supabase/supabase";
 import { v4 as uuid4 } from "uuid";
+import { signIn, signOut } from "../authSlice";
+import { useDispatch } from "react-redux";
 
 export default function Page() {
     const [name, setName] = useState("");
@@ -13,7 +15,36 @@ export default function Page() {
     const [stock, setStock] = useState("");
     const [file, setFile] = useState<File | null>(null);
     const [status, setStatus] = useState<string | null>(null);
+    const dispatch = useDispatch();
 
+  const [user, setUser] = useState<string | null | undefined>(undefined);
+    useEffect(() => {
+        const { data: authListener } = supabase.auth.onAuthStateChange(
+          (event, session) => {
+            if (session?.user) {
+              setUser(session.user.email || "GitHub User");
+              dispatch(signIn({
+                name: session.user.email,
+                iconUrl: "",
+                token: session.provider_token
+              }));
+              window.localStorage.setItem('oauth_provider_token', session.provider_token || "");
+              window.localStorage.setItem('oauth_provider_refresh_token', session.provider_refresh_token || "");
+            }
+    
+            if (event === 'SIGNED_OUT') {
+              window.localStorage.removeItem('oauth_provider_token');
+              window.localStorage.removeItem('oauth_provider_refresh_token');
+              setUser("");
+              dispatch(signOut());
+            }
+          }
+        );
+    
+        return () => {
+          authListener?.subscription.unsubscribe();
+        };
+      }, [dispatch]);
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.[0]) {
             setFile(e.target.files[0]);
@@ -67,7 +98,9 @@ export default function Page() {
     };
 
     return (
-        <div className="p-4 max-w-xl mx-auto">
+        <>
+        {user?(<>
+            <div className="p-4 max-w-xl mx-auto">
             <h1 className="text-2xl font-bold mb-4">商品投稿</h1>
 
             <form className="mb-4 text-center" onSubmit={onSubmit}>
@@ -105,5 +138,10 @@ export default function Page() {
 
             {status && <p className="text-green-600">{status}</p>}
         </div>
+            </>):(<>
+                <h1>ログインしてください</h1>
+            </>)}
+            </>
+        
     );
 }
