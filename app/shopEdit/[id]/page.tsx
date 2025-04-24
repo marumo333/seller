@@ -3,11 +3,12 @@ import React, { ChangeEvent, useEffect } from "react";
 import { useState} from "react";
 import { supabase } from "@/utils/supabase/supabase";
 import { useRouter } from "next/navigation";
-import { signIn, signOut } from "../authSlice";
+import { signIn,signOut } from "@/app/authSlice";
 import { useDispatch } from "react-redux";
 
 
-export default function ShopEdit({ id }: { id: string }) {
+export default function ShopEdit({ params }: { params: { id: string } }) {
+    const id ={params}
     const [stock, setStock] = useState<string>("");
     const [price, setPrice] = useState<string>("");
     const router = useRouter();
