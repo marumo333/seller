@@ -24,3 +24,11 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+//ログイン画面のcss
+body {
+  @apply bg-gray-50 text-gray-800;
+}
+
+button {
+  @apply font-medium py-2 px-4 rounded-lg transition duration-200;
+}

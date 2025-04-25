@@ -53,16 +53,15 @@ export default function Home() {
 
   return (
     <>
-      <div className="relative isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
-        <h1 className="text-2xl font-bold text-center mb-6">ログイン画面</h1>
-
-
-        <div className="flex justify-center items-center gap-x-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-white px-6 py-24 sm:py-32">
+        <h1 className="text-3xl font-bold text-center mb-10">ログイン画面</h1>
+        <div className="flex flex-wrap justify-center gap-10">
           <Github />
           <Google />
           <X />
         </div>
       </div>
+
     </>
   )
 }
