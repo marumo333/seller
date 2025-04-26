@@ -85,7 +85,7 @@ export default function Search() {
     const search = async (value: string) => {
         setLoading(true)
         try {
-            if (value !== "") {
+            if (value === "") {
                 await fetchPosts();
             } else {
                 const { data: posts, error } = await supabase
