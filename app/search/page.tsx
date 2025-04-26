@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { supabase } from "@/utils/supabase/supabase";
 import Head from "next/head";
 import { debounce } from "lodash";
@@ -108,15 +108,15 @@ export default function Search() {
     };
 
 
-    const debounceSearch = useCallback(
+    const debounceSearch = useMemo(() =>
         debounce((value: string) => {
             search(value);
         }, 1000),
-        []
-    );
+        []);
 
-    const handleChange = (e: React.ChangeEvent<HTMLElement>) => {
-        const value = (e.target as HTMLInputElement).value
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value
         setKeyword(value);
         debounceSearch(value);
     }
