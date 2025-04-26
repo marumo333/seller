@@ -6,7 +6,6 @@ import { debounce } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { signOut, signIn } from "../authSlice";
 import { Skeleton } from '@mui/material'
-import Link from "next/link";
 
 interface ImageItem {
     id: string;
@@ -91,7 +90,7 @@ export default function Search() {
                 const { data: posts, error } = await supabase
                     .from("shopposts")
                     .select("*")
-                    .ilike("name", `%${value}%`);
+                    .ilike("jan", `%${value}%`);
 
                 if (error) {
                     console.error("検索エラー:", error.message);
@@ -141,10 +140,7 @@ export default function Search() {
                             <h1 className="text-2xl font-semibold mb-4">検索機能</h1>
                             <div className="flex justify-end">
                             </div>
-                            <p>商品名検索</p>
-                            <Link href="/janSearch" className="flex justify-center items-center w-[300px] h-[60px] text-[#333] text-lg font-bold bg-[#7dca65] rounded-[20px] border-2 border-[#325328] no-underline">
-                                JANコードで検索
-                            </Link>
+                            <p>JANコード検索</p>
                             <div>
                                 <input
                                     type="text"
@@ -172,12 +168,14 @@ export default function Search() {
                                 ) : (
                                     <ul className="border border-gray-300 rounded p-4">
                                         <li className="font-bold border-b border-gray-300 pb-2 mb-2 flex justify-between">
+                                            <p className="w-1/4">JANコード</p>
                                             <p className="w-1/4">商品名</p>
                                             <p className="w-1/4">在庫数</p>
                                             <p className="w-1/4">画像</p>
                                         </li>
                                         {posts.map((post) => (
                                             <li key={post.id} className="py-4 border-b last:border-none flex justify-between items-center">
+                                                <p className="w-1/4">{post.jan}</p>
                                                 <p className="w-1/4">{post.name}</p>
                                                 <p className="w-1/4 font-semibold">{post.stock}</p>
                                                 <div className="w-1/4">
