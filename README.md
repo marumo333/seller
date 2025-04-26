@@ -69,6 +69,10 @@ const response = await fetch("https://api-free.deepl.com/v2/translate", {
 });
 
 ```
+##今後実装したいこと
+-商品決済システムの導入
+-デバイスごとのUI/UXの改善
+-顧客用と販売側の棲み分け
 vercel：https://seller-weld.vercel.app/
 
 
