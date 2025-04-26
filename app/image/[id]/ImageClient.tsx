@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { supabase } from "@/utils/supabase/supabase";
 import QRcode from './QRcode';
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 interface ImageItem {
   id: string;
@@ -23,6 +24,8 @@ export default function ImageClient({ id }: { id: string }) {
   const [loading, setLoading] = useState(false);
   const [userId, setUserId] = useState<string>("");
   const [translate, setTranslate] = useState<string>("");
+  const [show, setShow] = useState(false);
+  const router = useRouter();
 
   const fetchImage = async (imageId: string) => {
     setLoading(true);
@@ -90,7 +93,12 @@ export default function ImageClient({ id }: { id: string }) {
       </div>
     );
   }
-
+  const handleOpen = () => {
+    setShow(true);
+  };
+  const handleBack = () => {
+    router.back()
+  }
   return (
     <div className="p-6 max-w-3xl mx-auto bg-white rounded-lg shadow-md">
       <h1 className="text-3xl font-bold text-blue-900 mb-6 border-b pb-2">
@@ -145,9 +153,21 @@ export default function ImageClient({ id }: { id: string }) {
         </a>
         <a >
           <Link href="/shopEdit" className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md shadow">
-          商品情報を編集(管理者のみ可能)
+            商品情報を編集(管理者のみ可能)
           </Link>
         </a>
+        <button
+          onClick={handleBack}
+          className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-4 text-lg"
+        >
+          戻る
+        </button>
+        <button
+          onClick={handleOpen}
+          className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded text-lg"
+        >
+          購入する
+        </button>
       </div>
 
       <div className="my-4">
