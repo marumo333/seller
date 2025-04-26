@@ -84,21 +84,21 @@ export default function Search() {
 
     const search = async (value: string) => {
         setLoading(true)
-        if (value !== "") {
-            await fetchPosts();
-            return;
-        }
         try {
-            const { data: posts, error } = await supabase
-                .from("shopposts")
-                .select("*")
-                .ilike("name", `%${value}%`);
+            if (value !== "") {
+                await fetchPosts();
+            } else {
+                const { data: posts, error } = await supabase
+                    .from("shopposts")
+                    .select("*")
+                    .ilike("name", `%${value}%`);
 
-            if (error) {
-                console.error("検索エラー:", error.message);
-                return;
+                if (error) {
+                    console.error("検索エラー:", error.message);
+                    return;
+                }
+                setPosts(posts || []);
             }
-            setPosts(posts || []);
         } catch (err) {
             console.error("予期しないエラー発生", err);
         }
