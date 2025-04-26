@@ -83,10 +83,10 @@ export default function Search() {
     };
 
     const search = async (value: string) => {
-        setLoading(true)
+        setLoading(true);
         try {
             if (value === "") {
-                await fetchPosts();
+                setPosts([]); // 空文字だったら結果も空にする
             } else {
                 const { data: posts, error } = await supabase
                     .from("shopposts")
@@ -101,11 +101,11 @@ export default function Search() {
             }
         } catch (err) {
             console.error("予期しないエラー発生", err);
-        }
-        finally {
-            setLoading(false)
+        } finally {
+            setLoading(false);
         }
     };
+
 
 
     const debounceSearch = useMemo(() =>
