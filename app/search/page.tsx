@@ -175,7 +175,7 @@ export default function Search() {
                                         </li>
                                         {posts.map((post) => (
                                             <li key={post.id} className="py-4 border-b last:border-none flex justify-between items-center">
-                                                <p className="w-1/4">{new Date(post.name).toLocaleDateString()}</p>
+                                                <p className="w-1/4">{post.name}</p>
                                                 <p className="w-1/4 font-semibold">{post.stock}</p>
                                                 <div className="w-1/4">
                                                     <img
