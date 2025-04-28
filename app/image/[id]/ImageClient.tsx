@@ -7,6 +7,7 @@ import { supabase } from "@/utils/supabase/supabase";
 import QRcode from './QRcode';
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
+import { useSelector } from "react-redux";
 
 interface ImageItem {
   id: string;
@@ -20,6 +21,7 @@ interface ImageItem {
 }
 
 export default function ImageClient({ id }: { id: string }) {
+  const auth = useSelector((state: any) => state.auth.isSignIn);
   const [imageDetail, setImageDetail] = useState<ImageItem | null>(null);
   const [loading, setLoading] = useState(false);
   const [userId, setUserId] = useState<string>("");
@@ -50,8 +52,12 @@ export default function ImageClient({ id }: { id: string }) {
       stock: data.stock,
       price: data.price,
     });
-
     setLoading(false);
+  };
+
+  const fetchUser = async () => {
+    const { data } = await supabase.auth.getUser();
+    if (data?.user) setUserId(data.user.id);
   };
 
   function clickTranslate(my_target_lang: DeeplLanguages) {
@@ -68,9 +74,25 @@ export default function ImageClient({ id }: { id: string }) {
     });
   }
 
-  const fetchUser = async () => {
-    const { data } = await supabase.auth.getUser();
-    if (data?.user) setUserId(data.user.id);
+  const handlePurchaseConfirm = () => {
+    if (!auth) {
+      setShow(false);
+      router.push("/login");
+    } else {
+      // Stripe購入画面へ遷移予定
+    }
+  };
+
+  const handleBack = () => {
+    router.back();
+  };
+
+  const handleOpen = () => {
+    setShow(true);
+  };
+
+  const handleCancel = () => {
+    setShow(false);
   };
 
   useEffect(() => {
@@ -93,103 +115,100 @@ export default function ImageClient({ id }: { id: string }) {
       </div>
     );
   }
-  const handleOpen = () => {
-    setShow(true);
-  };
-  const handleBack = () => {
-    router.back()
-  }
+
   return (
-    <div className="p-6 max-w-3xl mx-auto bg-white rounded-lg shadow-md">
-      <h1 className="text-3xl font-bold text-blue-900 mb-6 border-b pb-2">
+    <div className="p-6 max-w-4xl mx-auto bg-white rounded-xl shadow-lg space-y-8">
+      {/* タイトル */}
+      <h1 className="text-3xl font-bold text-blue-800 border-b pb-2">
         商品名: {imageDetail.name}
       </h1>
 
-      {/* 商品情報セクション */}
-      <div className="space-y-4 text-gray-800">
-        <div className="text-lg">
-          <strong>JANコード：</strong>
-          <span className="ml-2 text-gray-600">{imageDetail.jan || "（なし）"}</span>
-        </div>
-        <div className="text-lg">
-          <strong>商品名：</strong>
-          <span className="ml-2 text-gray-600">{imageDetail.name || "（なし）"}</span>
-        </div>
-        <div className="text-lg">
-          <strong>商品詳細：</strong>
-          <span className="ml-2 text-gray-600">{imageDetail.content || "（なし）"}</span>
-        </div>
-        <div className="text-lg">
-          <strong>ターゲット層：</strong>
-          <span className="ml-2 text-gray-600">{imageDetail.tag || "（なし）"}</span>
-        </div>
-        <div className="text-lg">
-          <strong>在庫数：</strong>
-          <span className="ml-2 text-gray-600">{imageDetail.stock ?? "（なし）"}</span>
-        </div>
-        <div className="text-lg">
-          <strong>価格：</strong>
-          <span className="ml-2 text-gray-600">{imageDetail.price ?? "（なし）"}</span>
-        </div>
+      {/* 商品情報 */}
+      <div className="grid grid-cols-1 gap-4 text-gray-700">
+        <Item label="JANコード" value={imageDetail.jan || "（なし）"} />
+        <Item label="商品名" value={imageDetail.name || "（なし）"} />
+        <Item label="商品詳細" value={imageDetail.content || "（なし）"} />
+        <Item label="ターゲット層" value={imageDetail.tag || "（なし）"} />
+        <Item label="在庫数" value={imageDetail.stock ?? "（なし）"} />
+        <Item label="価格" value={imageDetail.price ?? "（なし）"} />
       </div>
 
-      {/* 画像表示 */}
-      <div className="my-6">
+      {/* 画像 */}
+      <div className="flex justify-center">
         <img
           src={imageDetail.url}
           alt={imageDetail.name}
-          className="object-contain w-full max-h-[400px] rounded-lg border border-gray-200 shadow"
+          className="object-contain w-full max-w-md rounded-lg border shadow-md"
         />
       </div>
 
-      {/* 操作ボタンエリア */}
-      <div className="flex flex-wrap justify-center gap-4 mb-6">
+      {/* ボタン */}
+      <div className="flex flex-wrap justify-center gap-4">
         <a
           href={imageDetail.url}
           download={imageDetail.name}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md shadow"
+          className="btn-primary"
         >
           ダウンロード
         </a>
-        <a >
-          <Link href="/shopEdit" className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md shadow">
-            商品情報を編集(管理者のみ可能)
-          </Link>
-        </a>
-        <button
-          onClick={handleBack}
-          className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-4 text-lg"
-        >
+        <Link href="/shopEdit" className="btn-primary">
+          商品情報を編集
+        </Link>
+        <button onClick={handleBack} className="btn-secondary">
           戻る
         </button>
-        <button
-          onClick={handleOpen}
-          className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded text-lg"
-        >
+        <button onClick={handleOpen} className="btn-warning">
           購入する
         </button>
       </div>
 
-      <div className="my-4">
+      {/* 購入モーダル */}
+      {show && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg space-y-4 text-center">
+            <h3 className="text-xl font-semibold">この商品を購入しますか？</h3>
+            <div className="flex justify-center gap-4">
+              <button onClick={handleCancel} className="btn-secondary">
+                キャンセル
+              </button>
+              <button onClick={handlePurchaseConfirm} className="btn-success">
+                購入する
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 翻訳 */}
+      <div className="space-y-2">
         <button
           onClick={() => clickTranslate('EN-US')}
-          className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md shadow"
+          className="btn-success"
         >
-          Translate English
+          Translate to English
         </button>
-        <div className="mt-3 p-4 bg-gray-100 border border-gray-300 rounded-md whitespace-pre-wrap text-gray-800">
+        <div className="p-4 bg-gray-100 rounded-md border text-gray-700 whitespace-pre-wrap">
           <strong>Translation result:</strong><br />
           {translate || "ここに翻訳結果が表示されます"}
         </div>
       </div>
 
-
       {/* QRコード */}
-      <div className="mt-6 flex flex-col md:flex-row justify-between gap-6">
-        <div className="md:w-1/2 flex items-center justify-center border p-4 rounded-md shadow">
+      <div className="flex justify-center">
+        <div className="border p-4 rounded-md shadow-md">
           <QRcode url={`https://seller-weld.vercel.app/image/${encodeURIComponent(imageDetail.id)}`} />
         </div>
       </div>
+    </div>
+  );
+}
+
+// コンポーネント：項目
+function Item({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div className="text-lg">
+      <strong>{label}：</strong>
+      <span className="ml-2">{value}</span>
     </div>
   );
 }
