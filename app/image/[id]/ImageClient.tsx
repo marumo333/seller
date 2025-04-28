@@ -151,9 +151,6 @@ export default function ImageClient({ id }: { id: string }) {
         >
           ダウンロード
         </a>
-        <Link href="/shopEdit" className="btn-primary">
-          商品情報を編集
-        </Link>
         <button onClick={handleBack} className="btn-secondary">
           戻る
         </button>
