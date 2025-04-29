@@ -5,7 +5,6 @@ import { DeeplLanguages } from 'deepl'
 import React, { useEffect, useState } from "react";
 import { supabase } from "@/utils/supabase/supabase";
 import QRcode from './QRcode';
-import Link from "next/link";
 import { useRouter } from 'next/navigation';
 import { useSelector } from "react-redux";
 
@@ -74,22 +73,58 @@ export default function ImageClient({ id }: { id: string }) {
     });
   }
 
+  //stripe checkout
+  const startCheckout = async () => {
+    if (!imageDetail || !userId) return;
+  
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            productId: imageDetail.id,
+            name: imageDetail.name,
+            price: imageDetail.price,
+            userId: userId,
+          }),
+        }
+      );
+  
+      const responseData = await response.json();
+  
+      if (responseData && responseData.checkout_url) {
+        sessionStorage.setItem("stripeSessionId", responseData.session_id);
+        router.push(responseData.checkout_url);
+      } else {
+        console.error("Invalid response data:", responseData);
+      }
+    } catch (err) {
+      console.error("Error in startCheckout:", err);
+    }
+  };
+  
+
   const handlePurchaseConfirm = () => {
     if (!auth) {
       setShow(false);
       router.push("/login");
     } else {
-      // Stripe購入画面へ遷移予定
+      //Stripe購入画面へ。
+      startCheckout();
     }
-  };
-
-  const handleBack = () => {
-    router.back();
   };
 
   const handleOpen = () => {
     setShow(true);
   };
+
+
+  const handleBack = () => {
+    router.back();
+  };
+
 
   const handleCancel = () => {
     setShow(false);
