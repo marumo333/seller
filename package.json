@@ -16,6 +16,7 @@
     "@mui/material": "^5.17.1",
     "@mui/styled-engine": "^7.0.2",
     "@mui/system": "^5.17.1",
+    "@prisma/client": "^6.6.0",
     "@reduxjs/toolkit": "^2.6.1",
     "@supabase/supabase-js": "^2.49.4",
     "compressorjs": "^1.2.1",
