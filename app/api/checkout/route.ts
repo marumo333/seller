@@ -24,27 +24,27 @@ export async function POST(req: Request) {
     }
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      mode: 'payment',
-      line_items: [
-        {
-          price_data: {
-            currency: 'jpy',
-            product_data: {
-              name: product.name,
+        mode: "payment",
+        line_items: [
+          {
+            price_data: {
+              currency: "jpy",
+              product_data: {
+                name: product.name,
+              },
+              unit_amount: Math.floor(product.price * 100),
             },
-            unit_amount: product.price * 100, // 必ず円→"円未満の整数(cent単位)"にする
+            quantity: 1,
           },
-          quantity: 1,
+        ],
+        success_url: `${process.env.NEXT_PUBLIC_APP_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/cancel`,
+        client_reference_id: userId,
+        metadata: {
+          productId: productId,
         },
-      ],
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/cancel`,
-      client_reference_id: userId,
-      metadata: {
-        productId: productId,
-      },
-    });
+      });
+      
 
     return NextResponse.json({
       checkout_url: session.url,
