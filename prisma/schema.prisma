@@ -400,3 +400,12 @@ enum one_time_token_type {
 
   @@schema("auth")
 }
+model Purchase {
+  id         String   @id @default(uuid())
+  userId     String
+  productId  String
+  createdAt  DateTime @default(now())
+
+  @@schema("public") // ←忘れずに！
+}
+
