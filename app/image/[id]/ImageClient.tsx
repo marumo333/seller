@@ -86,7 +86,7 @@ export default function ImageClient({ id }: { id: string }) {
           body: JSON.stringify({
             productId: imageDetail.id,
             name: imageDetail.name,
-            price: imageDetail.price,
+            price: Math.round(Number(imageDetail.price)),
             userId: userId,
           }),
         }
