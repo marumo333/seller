@@ -79,7 +79,7 @@ export default function ImageClient({ id }: { id: string }) {
   
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
+        `${process.env.NEXT_PUBLIC_API_URL}/image/${imageDetail.id}/checkout`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
