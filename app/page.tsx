@@ -1,13 +1,14 @@
-"use client"
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Index() {
   return (
-    <div className="relative min-h-screen bg-white px-6 py-24 sm:py-32 lg:px-8">
+    <div className="relative min-h-screen bg-gradient-to-b from-blue-50 to-white px-6 py-24 sm:py-32 lg:px-8 overflow-hidden">
       {/* ロゴ背景 */}
-      <div className="absolute inset-0 flex justify-center items-center opacity-10 z-0">
+      <div className="absolute inset-0 flex justify-center items-center opacity-10 z-0 pointer-events-none">
         <Image
           src="/seller.png"
           alt="logo"
@@ -19,23 +20,34 @@ export default function Index() {
       </div>
 
       {/* 本文コンテンツ */}
-      <div className="relative z-10 text-center space-y-6">
-        <h1 className="text-5xl font-semibold tracking-tight text-blue-900 sm:text-7xl">
+      <div className="relative z-10 max-w-2xl mx-auto text-center space-y-8 bg-white/60 backdrop-blur-sm rounded-xl p-10 shadow-lg">
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-blue-900">
           商品管理アプリ: Seller
         </h1>
 
-        <p>このアプリは、商品のプライスの修正・刷新等の商品管理</p>
-        <p>商品の修正ページを作成し、修正したものをQRコードに変換できるツールです。</p>
+        <p className="text-gray-700 text-lg leading-relaxed">
+          このアプリは、商品のプライスの修正・刷新等の商品管理ができます。
+          <br />
+          修正内容をQRコードに変換し、実店舗等で活用できます。
+        </p>
 
-        <p className="text-lg">下記からログインしてね 👇</p>
+        <p className="text-md text-gray-800 font-medium">下記からログインしてね 👇</p>
 
-        <Link
-          href="/Home"
-          className="text-red-600 underline underline-offset-2 hover:text-red-800 transition"
-        >
-          ログインはこちら
-        </Link>
+        <div className="flex flex-col sm:flex-row justify-center gap-4 mt-6">
+          <Link
+            href="/Home"
+            className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold shadow transition"
+          >
+            ログイン（一般ユーザー）
+          </Link>
+          <Link
+            href="/shop"
+            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold shadow transition"
+          >
+            ログイン（販売者用）
+          </Link>
+        </div>
       </div>
     </div>
-  )
+  );
 }
