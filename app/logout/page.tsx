@@ -44,7 +44,7 @@ export default function Logout() {
       const { error } = await supabase.auth.signOut();
       if (error) throw new Error(error.message);
       dispatch(signOut());
-      router.push("/Home");
+      router.push("/");
     } catch (error: any) {
       console.error("ログアウトエラー発生", error.message);
     }
