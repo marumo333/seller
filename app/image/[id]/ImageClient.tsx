@@ -153,6 +153,19 @@ export default function ImageClient({ id }: { id: string }) {
 
   return (
     <div className="p-6 max-w-4xl mx-auto bg-white rounded-xl shadow-lg space-y-8">
+      {/* 翻訳 */}
+      <div className="space-y-2">
+        <button
+          onClick={() => clickTranslate('EN-US')}
+          className="btn-success"
+        >
+          Translate to English
+        </button>
+        <div className="p-4 bg-gray-100 rounded-md border text-gray-700 whitespace-pre-wrap">
+          <strong>Translation result:</strong><br />
+          {translate || "ここに翻訳結果が表示されます"}
+        </div>
+      </div>
       {/* タイトル */}
       <h1 className="text-3xl font-bold text-blue-800 border-b pb-2">
         商品名: {imageDetail.name}
@@ -210,21 +223,6 @@ export default function ImageClient({ id }: { id: string }) {
           </div>
         </div>
       )}
-
-      {/* 翻訳 */}
-      <div className="space-y-2">
-        <button
-          onClick={() => clickTranslate('EN-US')}
-          className="btn-success"
-        >
-          Translate to English
-        </button>
-        <div className="p-4 bg-gray-100 rounded-md border text-gray-700 whitespace-pre-wrap">
-          <strong>Translation result:</strong><br />
-          {translate || "ここに翻訳結果が表示されます"}
-        </div>
-      </div>
-
       {/* QRコード */}
       <div className="flex justify-center">
         <div className="border p-4 rounded-md shadow-md">
