@@ -22,7 +22,7 @@ export default function Index() {
       {/* 本文コンテンツ */}
       <div className="relative z-10 max-w-2xl mx-auto text-center space-y-8 bg-white/60 backdrop-blur-sm rounded-xl p-10 shadow-lg">
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-blue-900">
-          商品管理アプリ: Seller
+          商品管理アプリ  『Seller』
         </h1>
 
         <p className="text-gray-700 text-lg leading-relaxed">
