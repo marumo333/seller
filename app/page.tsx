@@ -38,12 +38,6 @@ export default function Index() {
             href="/Home"
             className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold shadow transition"
           >
-            ログイン（一般ユーザー）
-          </Link>
-          <Link
-            href="/shop"
-            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold shadow transition"
-          >
             ログイン（販売者用）
           </Link>
         </div>
