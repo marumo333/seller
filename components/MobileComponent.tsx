@@ -42,7 +42,7 @@ export default function MobileComponent({ className }: { className?: string }) {
     return (
         <>{
             user?(
-                <header className="fixed z-20 flex w-full gap-y-2 bg-blue-500 p-4 text-white shadow">
+                <header className="fixed top-0 left-0 right-0 z-50 bg-blue-500 p-4 text-white shadow">
                 <div className="flex w-full justify-between">
                     <div className="flex w-full justify-between">
                         <div>
@@ -77,7 +77,7 @@ export default function MobileComponent({ className }: { className?: string }) {
                 </div >
             </header >
             ):(
-                <header className="fixed z-20 flex w-full gap-y-2 bg-blue-500 p-4 text-white shadow">
+                <header className="fixed top-0 left-0 right-0 z-50 bg-blue-500 p-4 text-white shadow">
                 <div className="flex w-full justify-between">
                     <div className="flex w-full justify-between">
                         <div>
