@@ -80,7 +80,7 @@ export default function ImageClient({ id }: { id: string }) {
   //stripe checkout
   const startCheckout = async () => {
     if (!imageDetail || !userId) return;
-  
+
     try {
       const response = await fetch(
         `/image/${imageDetail.id}/checkout`,
@@ -95,9 +95,9 @@ export default function ImageClient({ id }: { id: string }) {
           }),
         }
       );
-  
+
       const responseData = await response.json();
-  
+
       if (responseData && responseData.checkout_url) {
         sessionStorage.setItem("stripeSessionId", responseData.session_id);
         router.push(responseData.checkout_url);
@@ -108,7 +108,7 @@ export default function ImageClient({ id }: { id: string }) {
       console.error("Error in startCheckout:", err);
     }
   };
-  
+
 
   const handlePurchaseConfirm = () => {
     if (!auth) {
@@ -209,7 +209,12 @@ export default function ImageClient({ id }: { id: string }) {
         <button onClick={handleOpen} className="btn-warning">
           購入する
         </button>
-        <Link href="/shopEdit" className={buttonVariants({ variant: "outline" })}>商品情報を更新</Link>
+        <Link
+          href={`/image/${encodeURIComponent(imageDetail.id)}/shopEdit`}
+          className={buttonVariants({ variant: "outline" })}
+        >
+          商品情報を更新
+        </Link>
 
       </div>
 
