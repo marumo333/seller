@@ -23,10 +23,11 @@ export default function RootLayout({
     <html lang="ja">
       <body>
         <Providers>
-      <Header children={undefined}/>
+          <Header>
         <main className="min-h-screen flex flex-col items-center px-2">
         <ClientWrapper>{children}</ClientWrapper>
         </main>
+        </Header>
         </Providers>
       </body>
     </html>
