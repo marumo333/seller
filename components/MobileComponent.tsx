@@ -8,7 +8,9 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 
 export default function MobileComponent({ className }: { className?: string }) {
-    const [isHamburgerOpened, { close: hamburgerClose, toggle: hamburgerToggle },] = useDisclosure(false)
+    const [opened, handlers] = useDisclosure(false);
+    const { open, close, toggle } = handlers;
+
     const dispatch = useDispatch();
 
     const [user, setUser] = useState<string | null | undefined>(undefined);
@@ -47,13 +49,18 @@ export default function MobileComponent({ className }: { className?: string }) {
                         <div className="flex w-full justify-between">
                             <div>
                                 <Burger
-                                    opened={isHamburgerOpened}
-                                    onClick={hamburgerToggle}
-                                    color="#fff"
+                                    opened={opened}
+                                    //onClick={hamburgerToggle}
+                                    onClick={() => {
+                                        console.log("toggle");
+                                        toggle();
+                                    }
+                                    }
+                                //toggleが発火shている確認
                                 />
                                 <Drawer
-                                    opened={isHamburgerOpened}
-                                    onClose={hamburgerClose}
+                                    opened={opened}
+                                    onClose={close}
                                     zIndex={9999}
                                     withCloseButton={false}
                                     classNames={{
@@ -83,14 +90,17 @@ export default function MobileComponent({ className }: { className?: string }) {
                         <div className="flex w-full justify-between">
                             <div>
                                 <Burger
-                                    opened={isHamburgerOpened}
-                                    onClick={hamburgerToggle}
+                                    opened={opened}
+                                    onClick={() => {
+                                        console.log("toggle")
+                                        toggle();
+                                    }}
                                     color="#fff"
                                 />
                                 <Drawer
-                                    opened={isHamburgerOpened}
-                                    onClose={hamburgerClose}
-                                    zIndex={1000} // ← これがポイント
+                                    opened={opened}
+                                    onClose={close}
+                                    zIndex={9999} // ← これがポイント
                                     withCloseButton={false}
                                     classNames={{
                                         body: "p-0",
