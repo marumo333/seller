@@ -17,8 +17,11 @@
     "@mui/styled-engine": "^7.0.2",
     "@mui/system": "^5.17.1",
     "@prisma/client": "^6.6.0",
+    "@radix-ui/react-slot": "^1.2.0",
     "@reduxjs/toolkit": "^2.6.1",
     "@supabase/supabase-js": "^2.49.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "compressorjs": "^1.2.1",
     "deepl": "^1.0.13",
     "install": "^0.13.0",
@@ -34,6 +37,7 @@
     "redux": "^5.0.1",
     "sass": "^1.86.3",
     "stripe": "^18.0.0",
+    "tailwind-merge": "^3.2.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

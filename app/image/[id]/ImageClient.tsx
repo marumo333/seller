@@ -7,6 +7,10 @@ import { supabase } from "@/utils/supabase/supabase";
 import QRcode from './QRcode';
 import { useRouter } from 'next/navigation';
 import { useSelector } from "react-redux";
+import Link from 'next/link';
+import { buttonVariants } from "@/components/ui/button"
+
+
 
 interface ImageItem {
   id: string;
@@ -205,6 +209,8 @@ export default function ImageClient({ id }: { id: string }) {
         <button onClick={handleOpen} className="btn-warning">
           購入する
         </button>
+        <Link href="/shopEdit" className={buttonVariants({ variant: "outline" })}>商品情報を更新</Link>
+
       </div>
 
       {/* 購入モーダル */}
