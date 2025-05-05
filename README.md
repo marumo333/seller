@@ -86,7 +86,7 @@ const response = await fetch("https://api-free.deepl.com/v2/translate", {
 ---
 ##今後実装したいこと
 - 正式な商品決済システムの導入
-- 顧客用と販売側の棲み分け→セキュリティ条の懸念から顧客用のアプリ：customer,販売者側のアプリ：sellerに差別化することに決定
+- 顧客用と販売側の棲み分け→セキュリティ上の懸念から顧客用のアプリ：customer,販売者側のアプリ：sellerに差別化することに決定
 ---
 vercel：https://seller-weld.vercel.app/
 
