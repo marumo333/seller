@@ -16,6 +16,7 @@
 - [Supabase](https://supabase.com/)
 - [DeeplAPI](https://support.deepl.com/hc/ja/articles/360021200939-DeepL-API-Free)
 - [stripe](https://stripe.com/)
+- ORMツール・・・[prisma](https://www.prisma.io/)
 ---
 
 ## 📝 アプリ概要
