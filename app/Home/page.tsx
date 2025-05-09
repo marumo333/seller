@@ -21,7 +21,7 @@ export default function Home() {
       (event, session) => {
         console.log(event)
         if (session?.user) {
-          setUser(session.user.email || "GitHub User")
+          setUser(session.user.email || "Login User")
           dispatch(signIn({
             name: session.user.email,
             iconUrl: "",
