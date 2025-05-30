@@ -14,7 +14,6 @@ export default function Home() {
   const auth = useSelector((state: any) => state.auth.isSignIn);
   const dispatch = useDispatch()
   const [user, setUser] = useState("")//ログイン情報を保持するステート
-  const [avatarUrl, setAvatarUrl] = useState<string>(""); // URLを保存する状態
   const router = useRouter();
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(

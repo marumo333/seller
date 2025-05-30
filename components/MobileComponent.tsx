@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux"
 
 export default function MobileComponent({ className }: { className?: string }) {
     const [opened, handlers] = useDisclosure(false);
-    const { open, close, toggle } = handlers;
+    const { close, toggle } = handlers;
 
     const dispatch = useDispatch();
 
