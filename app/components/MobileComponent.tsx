@@ -130,6 +130,12 @@ export default function MobileComponent({ className }: { className?: string }) {
                     inner: "w-[380px]",
                   }}
                 >
+                  {/* Xボタン追加 */}
+                  <div className="flex justify-end p-4">
+                    <button onClick={close} className="text-2xl font-bold">
+                      &times;
+                    </button>
+                  </div>
                   <div className="px-4 pt-[78px] font-bold flex flex-col gap-4">
                     <Link href="/private" className="mb-4" onClick={close}>
                       商品一覧
