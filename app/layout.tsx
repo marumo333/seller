@@ -1,6 +1,6 @@
 import "./globals.css";
 import React from "react";
-import Header from "@/components/Header";
+import Header from "@/app/components/Header";
 import ClientWrapper from "./clientWrapper";
 import Providers from "./provider";
 
