@@ -1,6 +1,6 @@
 "use client";
 
-import { Translator } from '@/libs/deepl'
+import { Translator } from '@/app/libs/deepl'
 import { DeeplLanguages } from 'deepl'
 import React, { useEffect, useState } from "react";
 import { supabase } from "@/utils/supabase/supabase";
