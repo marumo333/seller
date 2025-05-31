@@ -8,7 +8,7 @@ import QRcode from './QRcode';
 import { useRouter } from 'next/navigation';
 import { useSelector } from "react-redux";
 import Link from 'next/link';
-import { buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/app/components/ui/button"
 
 
 
