@@ -69,11 +69,11 @@ export default function MobileComponent({ className }: { className?: string }) {
                                     }}
                                 >
                                     <div className="px-4 pt-[78px] font-bold flex flex-col gap-4">
-                                        <Link href="/logout" className="mb-4">ログアウト</Link>
-                                        <Link href="/private" className="mb-4">商品一覧</Link>
-                                        <Link href="/myPage" className="mb-4">マイページ</Link>
-                                        <Link href="/stockInfo" className="mb-4">在庫情報</Link>
-                                        <Link href="/post" className="mb-4">商品を投稿</Link>
+                                        <Link href="/logout" className="mb-4" onClick={close}>ログアウト</Link>
+                                        <Link href="/private" className="mb-4" onClick={close}>商品一覧</Link>
+                                        <Link href="/myPage" className="mb-4" onClick={close}>マイページ</Link>
+                                        <Link href="/stockInfo" className="mb-4" onClick={close}>在庫情報</Link>
+                                        <Link href="/post" className="mb-4" onClick={close}>商品を投稿</Link>
                                     </div>
                                 </Drawer>
 
@@ -108,10 +108,10 @@ export default function MobileComponent({ className }: { className?: string }) {
                                     }}
                                 >
                                     <div className="px-4 pt-[78px] font-bold flex flex-col gap-4">
-                                        <Link href="/private" className="mb-4">商品一覧</Link>
-                                        <Link href="/myPage" className="mb-4">マイページ</Link>
-                                        <Link href="/stockInfo" className="mb-4">在庫情報</Link>
-                                        <Link href="/post" className="mb-4">商品を投稿</Link>
+                                        <Link href="/private" className="mb-4" onClick={close}>商品一覧</Link>
+                                        <Link href="/myPage" className="mb-4" onClick={close}>マイページ</Link>
+                                        <Link href="/stockInfo" className="mb-4" onClick={close}>在庫情報</Link>
+                                        <Link href="/post" className="mb-4" onClick={close}>商品を投稿</Link>
                                     </div>
                                 </Drawer>
                             </div>
