@@ -1,12 +1,11 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/utils/supabase/supabase";
 import { signOut, signIn } from "../authSlice";
 
 export default function Logout() {
-  const auth = useSelector((state: any) => state.auth.isSignIn);
   const dispatch = useDispatch();
   const [user, setUser] = useState<string | null | undefined>(undefined);
   const router = useRouter();

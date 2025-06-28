@@ -1,7 +1,6 @@
 // app/image/[id]/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import ImageClient from "./ImageClient"; // そのままでOK
 
