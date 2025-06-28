@@ -43,7 +43,7 @@ export default function Mypage() {
         if (!userId) return;
 
         const { data, error } = await supabase
-            .from("users")
+            .from("shopusers")
             .select("id, username, avatar_url, updated_at, full_name")
             .eq("id", userId) // ユーザーごとのデータのみ取得
             .order("updated_at", { ascending: false })
@@ -73,7 +73,7 @@ export default function Mypage() {
             return;
         }
         const { data, error } = await supabase
-            .from('users')
+            .from('shopusers')
             .upsert(
                 { id: userId, full_name: myprof.full_name },
                 { onConflict: 'id' }//idが重複していたら更新
@@ -132,7 +132,7 @@ export default function Mypage() {
         }
 
         const { error: updateError } = await supabase
-            .from("users")
+            .from("shopusers")
             .update({ avatar_url: publicUrl })
             .eq("id", userId);
 
@@ -202,7 +202,7 @@ export default function Mypage() {
                                 </div>
 
                                 <div className="sm:col-span-2">
-                                    <label className="block text-sm font-semibold text-gray-900">Avatar Image</label>
+                                    <label className="block text-sm font-semibold text-gray-900" id="avatar-img">Avatar Image</label>
                                     <div className="mt-2.5">
                                         <input
                                             accept="image/*"
