@@ -3,7 +3,7 @@
 import { supabase } from "@/utils/supabase/supabase";
 import "../globals.css";
 import { signOut, signIn } from "../authSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import React from "react";
 import Icon from "./Icon";
