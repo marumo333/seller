@@ -3,15 +3,15 @@ import { supabase } from "@/utils/supabase/supabase";
 import "../globals.css"
 import { signOut } from "../authSlice";
 import { signIn } from "../authSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import React from "react";
 import Google from "./google";
 import X from "./X";
 import { useRouter } from "next/navigation";
 import Github from "./github"
+
 export default function Home() {
-  const auth = useSelector((state: any) => state.auth.isSignIn);
   const dispatch = useDispatch()
   const [user, setUser] = useState("")//ログイン情報を保持するステート
   const router = useRouter();

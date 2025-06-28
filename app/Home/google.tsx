@@ -2,14 +2,13 @@
 import { supabase } from "@/utils/supabase/supabase";
 import "../globals.css";
 import { signOut, signIn } from "../authSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import React from "react";
 import Icon from "./Icon";
 import { useRouter } from "next/navigation";
 
 export default function Google() {
-  const auth = useSelector((state: any) => state.auth.isSignIn);
   const dispatch = useDispatch();
   const [user, setUser] = useState("");
   const [avatarUrl, setAvatarUrl] = useState<string>("");
