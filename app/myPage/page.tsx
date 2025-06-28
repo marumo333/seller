@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import { supabase } from "@/utils/supabase/supabase";
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import Compressor from "compressorjs";
 
 interface Prof {
