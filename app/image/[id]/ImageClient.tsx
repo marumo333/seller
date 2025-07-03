@@ -139,6 +139,27 @@ export default function ImageClient({ id }: { id: string }) {
     fetchUser();
   }, [id]);
 
+  // --- 追加部分：削除処理 ---
+  const handleDelete = async () => {
+    if (!imageDetail) return;
+    const ok = window.confirm("本当にこの商品を削除しますか？");
+    if (!ok) return;
+
+    const { error } = await supabase
+      .from("shopposts")
+      .delete()
+      .eq("id", imageDetail.id);
+
+    if (error) {
+      console.error("削除エラー:", error.message);
+      alert("削除に失敗しました: " + error.message);
+      return;
+    }
+
+    // 削除成功 → 一つ前のページへ戻る or リストページへリダイレクト
+    router.back();
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -215,6 +236,13 @@ export default function ImageClient({ id }: { id: string }) {
         >
           商品情報を更新
         </Link>
+
+        <button
+          onClick={handleDelete}
+          className={buttonVariants({ variant: "destructive" })}
+        >
+          削除
+        </button>
 
       </div>
 
