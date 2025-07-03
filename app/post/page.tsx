@@ -111,14 +111,25 @@ export default function Page() {
                 { v: stock, s: setStock, p: "在庫" },
                 { v: price, s: setPrice, p: "価格（税抜）" },
                 ].map(({ v, s, p }, i) => (
-                    <input
-                        key={i}
-                        type="text"
-                        className="mb-2 border rounded p-2 w-full"
-                        placeholder={p}
-                        value={v}
-                        onChange={(e) => s(e.target.value)}
-                    />
+                    p === "内容" ? (
+                <textarea
+                  key={i}
+                  className="mb-2 border rounded p-2 w-full"
+                  placeholder={p}
+                  value={v}
+                  rows={4}
+                  onChange={(e) => s(e.target.value)}
+                />
+              ) : (
+                <input
+                  key={i}
+                  type="text"
+                  className="mb-2 border rounded p-2 w-full"
+                  placeholder={p}
+                  value={v}
+                  onChange={(e) => s(e.target.value)}
+                />
+              )
                 ))}
 
                 <input
