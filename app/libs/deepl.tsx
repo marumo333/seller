@@ -1,17 +1,12 @@
 export type DeeplLanguages = 'EN-US' | 'JA' | 'DE' | 'FR' | 'ES' | 'IT' | 'PT' | 'RU' | 'ZH';
 
 export async function Translator(text: string, targetLang: DeeplLanguages): Promise<{ text: string }> {
-  if (!process.env.DEEPL_AUTH_KEY) {
-    throw new Error('DEEPL_AUTH_KEY is not set');
-  }
-
-  const response = await fetch('https://api-free.deepl.com/v2/translate', {
+  const response = await fetch('/api/translate', {
     method: 'POST',
     headers: {
-      'Authorization': `DeepL-Auth-Key ${process.env.DEEPL_AUTH_KEY}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
     },
-    body: new URLSearchParams({
+    body: JSON.stringify({
       text: text,
       target_lang: targetLang,
     }),
@@ -22,5 +17,5 @@ export async function Translator(text: string, targetLang: DeeplLanguages): Prom
   }
 
   const data = await response.json();
-  return { text: data.translations[0].text };
+  return { text: data.text };
 }
