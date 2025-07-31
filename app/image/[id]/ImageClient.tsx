@@ -1,7 +1,6 @@
 "use client";
 
-import { Translator } from '@/app/libs/deepl'
-import { DeeplLanguages } from 'deepl'
+import { Translator,DeeplLanguages } from '@/app/libs/deepl'
 import React, { useEffect, useState } from "react";
 import { supabase } from "@/utils/supabase/supabase";
 import QRcode from './QRcode';

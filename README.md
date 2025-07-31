@@ -52,9 +52,9 @@
 
 ### バックエンド（BaaS）
 - [Supabase](https://supabase.com/)
-- [DeeplAPI](https://support.deepl.com/hc/ja/articles/360021200939-DeepL-API-Free)
-- [stripe](https://stripe.com/)
-- ORMツール[prisma](https://www.prisma.io/)
+- [DeepL API](https://support.deepl.com/hc/ja/articles/360021200939-DeepL-API-Free) - 直接REST API呼び出し
+- [Stripe](https://stripe.com/)
+- ORMツール[Prisma](https://www.prisma.io/)
 ---
 
 ## 📝 アプリ概要
@@ -85,16 +85,24 @@
 
 ## ⚠️ 実装で苦労したこと
 
-### DeepL翻訳APIの導入とaxios脆弱性
+### DeepL翻訳APIの導入とセキュリティ対応
 
 DeepL APIを使用する際、初期は非公式の `deepl` ライブラリを導入しましたが、  
 このライブラリが依存していた `axios` に以下の**重大な脆弱性**が存在していました：
 
-- CSRF（クロスサイトリクエストフォージェリ）
-- SSRF（サーバーサイドリクエストフォージェリ）
-- 資格情報の漏洩リスク
+- **CSRF（クロスサイトリクエストフォージェリ）脆弱性**
+- **SSRF（サーバーサイドリクエストフォージェリ）脆弱性**  
+- **資格情報の漏洩リスク**
 
-これにより、ユーザー情報や内部APIが危険にさらされる恐れがあり、対応が必要でした。
+npm auditで以下のような警告が表示されました：
+```
+axios  <=0.29.0
+Severity: high
+Axios Cross-Site Request Forgery Vulnerability
+axios Requests Vulnerable To Possible SSRF and Credential Leakage
+```
+
+これにより、ユーザー情報や内部APIが危険にさらされる恐れがあったため、根本的な対応が必要でした。
 
 ### Stripe決済機能の初実装
 
@@ -106,24 +114,54 @@ Prismaを経由してSupabaseと連携する設計
 
 ## ✅ 改善策
 
-**axios を使用せず、`fetch` API を使用して DeepL の REST エンドポイントを直接叩く**ことで安全性を確保しました。
+### セキュリティ脆弱性の解決
 
-```ts
-const response = await fetch("https://api-free.deepl.com/v2/translate", {
-  method: "POST",
-  headers: {
-    Authorization: `DeepL-Auth-Key ${process.env.DEEPL_AUTH_KEY}`,
-    "Content-Type": "application/x-www-form-urlencoded",
-  },
-  body: new URLSearchParams({ text, target_lang }),
-});
+**脆弱性のある `deepl` パッケージを完全に削除し、`fetch` API を使用して DeepL の REST API を直接呼び出す**ことで安全性を確保しました。
 
+```typescript
+// app/libs/deepl.tsx
+export type DeeplLanguages = 'EN-US' | 'JA' | 'DE' | 'FR' | 'ES' | 'IT' | 'PT' | 'RU' | 'ZH';
+
+export async function Translator(text: string, targetLang: DeeplLanguages): Promise<{ text: string }> {
+  if (!process.env.DEEPL_AUTH_KEY) {
+    throw new Error('DEEPL_AUTH_KEY is not set');
+  }
+
+  const response = await fetch('https://api-free.deepl.com/v2/translate', {
+    method: 'POST',
+    headers: {
+      'Authorization': `DeepL-Auth-Key ${process.env.DEEPL_AUTH_KEY}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      text: text,
+      target_lang: targetLang,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Translation failed: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  return { text: data.translations[0].text };
+}
 ```
--Stripe Checkoutの導入により、シンプルかつ安全な購入フローを構築。
--PrismaとSupabaseを連携し、バックエンド管理を一元化。
+
+### 実装上の改善点
+
+- **依存関係の最小化**: 外部ライブラリではなく、ブラウザ標準のfetch APIを使用
+- **型安全性の向上**: TypeScriptで厳密な型定義を実装
+- **エラーハンドリングの強化**: API呼び出し失敗時の適切な例外処理
+- **環境変数の管理**: セキュアなAPIキー管理
+### その他の技術的改善
+
+-**Stripe Checkoutの導入**により、シンプルかつ安全な購入フローを構築。
+-**PrismaとSupabaseを連携**し、バックエンド管理を一元化。
+-**npm audit**による定期的なセキュリティチェックの実施。
 
 ---
-##今後実装したいこと
+## 今後実装したいこと
 - 正式な商品決済システムの導入
 - 顧客用と販売側の棲み分け→セキュリティ上の懸念から顧客用のアプリ：customer,販売者側のアプリ：sellerに差別化することに決定
 ---

@@ -1,20 +1,26 @@
-export async function Translator(text: string, target: string) {
-const res = await fetch("/api/translate", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    text,
-    target_lang: target,
-  }),
-});
+export type DeeplLanguages = 'EN-US' | 'JA' | 'DE' | 'FR' | 'ES' | 'IT' | 'PT' | 'RU' | 'ZH';
 
-
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`翻訳失敗: ${res.status} - ${err}`);
+export async function Translator(text: string, targetLang: DeeplLanguages): Promise<{ text: string }> {
+  if (!process.env.DEEPL_AUTH_KEY) {
+    throw new Error('DEEPL_API_KEY is not set');
   }
 
-  return await res.json(); // { text: "...", detected_source_language: "..." }
+  const response = await fetch('https://api-free.deepl.com/v2/translate', {
+    method: 'POST',
+    headers: {
+      'Authorization': `DeepL-Auth-Key ${process.env.DEEPL_AUTH_KEY}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      text: text,
+      target_lang: targetLang,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Translation failed: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  return { text: data.translations[0].text };
 }
