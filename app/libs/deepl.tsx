@@ -2,7 +2,7 @@ export type DeeplLanguages = 'EN-US' | 'JA' | 'DE' | 'FR' | 'ES' | 'IT' | 'PT' |
 
 export async function Translator(text: string, targetLang: DeeplLanguages): Promise<{ text: string }> {
   if (!process.env.DEEPL_AUTH_KEY) {
-    throw new Error('DEEPL_API_KEY is not set');
+    throw new Error('DEEPL_AUTH_KEY is not set');
   }
 
   const response = await fetch('https://api-free.deepl.com/v2/translate', {
