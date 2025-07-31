@@ -4,7 +4,7 @@ import Stripe from "stripe";
 
 // Stripe初期化
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-03-31.basil", // 明示推奨
+  apiVersion: "2025-07-30.basil", // 明示推奨
 });
 
 export async function POST(request: Request) {
