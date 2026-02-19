@@ -16,7 +16,7 @@
     "@mui/material": "^5.17.1",
     "@mui/styled-engine": "^7.0.2",
     "@mui/system": "^5.17.1",
-    "@prisma/client": "^6.6.0",
+    "@prisma/client": "6.6.0",
     "@radix-ui/react-slot": "^1.2.0",
     "@reduxjs/toolkit": "^2.6.1",
     "@supabase/supabase-js": "^2.49.4",
@@ -41,7 +41,7 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {
-    "prisma": "^6.6.0",
+    "prisma": "6.6.0",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/lodash": "^4.17.16",
